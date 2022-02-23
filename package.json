@@ -1,6 +1,6 @@
 {
   "name": "@snaptrade/js-fetch-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A NodeJS sdk for SnapTrade API.",
   "main": "./dist/api.js",
   "scripts": {
