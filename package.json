@@ -1,7 +1,7 @@
 {
   "name": "@snaptrade/js-fetch-api",
   "version": "1.0.0",
-  "description": "Javascript SDK for SnapTrade API.",
+  "description": "A NodeJS sdk for SnapTrade API.",
   "main": "./dist/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/passiv/snaptrade"
+    "url": "git+https://github.com/passiv/snaptrade-nodesdk"
   },
   "keywords": [
     "snaptrade",
@@ -19,9 +19,9 @@
   ],
   "author": "Passiv",
   "license": "ISC",
-  "homepage": "https://github.com/passiv/snaptrade",
+  "homepage": "https://passiv.com/snaptrade/",
   "bugs": {
-    "url": "https://github.com/passiv/snaptrade/issues"
+    "url": "https://github.com/passiv/snaptrade-nodesdk/issues"
   },
   "dependencies": {
     "axios": "^0.25.0",
