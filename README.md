@@ -1,16 +1,33 @@
 # @snaptrade/js-fetch-api
 
-A Node SDK for SnapTrade API.
+A SnapTrade NodeJS sdk to help you make requests to the [SnapTrade API][1] endpoints more easily.
 
-Contact us to schedule a demo and get a consumer key: [api@snaptrade.com](mailto:api@snaptrade.com).
+Contact us to schedule a demo and get a consumer key: [api@snaptrade.com][contact].
+
+---
+
+## Requirements
+
+- Node 16 or later
+
+## Installation
+
+```
+npm i @snaptrade/js-fetch-api
+```
 
 ## Getting Started
+
+- Before getting started, you will need a **clientID** and a **consumerKey**. If you don't have one, please send us an [email][contact]
+  to get a new one.
+
+**Note** : Your consumerKey should always remain a secret! Never hard code it!
 
 ```typescript
 const SnapTrade = require("@snaptrade/js-fetch-api");
 
 const const snapTrade = new SnapTrade(
-  "DEMO",
+  "CLIENT_ID",
   "CONSUMER_KEY"
 );
 
@@ -84,57 +101,23 @@ const deleteUser = async () => {
 };
 ```
 
+Check out the documentation below for making requests to other SnapTrade API endpoints using this sdk:
+
+- [Account Information Endpoints]
+- [Trading Endpoints]
+- [Connections Endpoints]
+- [Reference Data Endpoints]
+
 ---
 
-## Account Information
+## License & copyrights
 
-### _user holdings_
+Licensed under [Apache License 2.0][2].
 
-List all accounts for the user, plus balances and positions for each account.
-
-##### Signature:
-
-```typescript
-fetchUserHoldings({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<UserHoldingsResponseType>
-
-```
-
-##### Example:
-
-```typescript
-const userHoldings = async () => {
-  const holdings = await snapTrade.fetchUserAccounts({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
-  });
-  return holdings;
-};
-```
-
-### _user accounts_
-
-List all investment accounts for the user.
-
-##### Signature:
-
-```typescript
-fetchUserAccounts({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<AccountType[]>
-```
-
-##### Example:
-
-```typescript
-const userAccounts = async () => {
-  const accounts = await snapTrade.fetchUserAccounts({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
-  });
-  return accounts;
-};
-```
+[1]: https://docs.snaptrade.com/reference/getting-started
+[contact]: mailto:api@snaptrade.com
+[2]: LICENSE
+[account information endpoints]: docs/account-information-endpoints.md
+[trading endpoints]: docs/trading-endpoints.md
+[connections endpoints]: docs/connections-endpoints.md
+[reference data endpoints]: docs/reference-data-endpoints.md
