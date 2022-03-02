@@ -8,7 +8,7 @@ Contact us to schedule a demo and get a consumer key: [api@snaptrade.com][contac
 
 ## Requirements
 
-- Node 16 or later
+- Node 17 or later
 
 ## Installation
 
@@ -30,13 +30,6 @@ const const snapTrade = new SnapTrade(
   "CLIENT_ID",
   "CONSUMER_KEY"
 );
-
-
-// Gets API Status
-const apiStatus = async () => {
-  const status = await snapTrade.getAPIStatus();
-  return status;
-};
 
 // Register a new user
 const registerUser = async () => {

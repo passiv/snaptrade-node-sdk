@@ -50,11 +50,11 @@ export const request = async (options: {
   consumerKey: string;
   defaultQueryParams: {
     clientId: string;
-    userId: string | null;
-    userSecret: string | null;
+    userId?: string | null;
+    userSecret?: string | null;
   };
-  extraParams: {} | null;
-  data: {} | null;
+  extraParams?: {} | null;
+  data?: {} | null;
 }) => {
   const {
     endpoint,

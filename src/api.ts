@@ -9,7 +9,6 @@ import {
 import { DefaultQueryParams, OrderImpactBodyParams } from "./option-types";
 import {
   AccountPositionsResponseType,
-  ApiStatusResponseType,
   BrokerageAuthResponseType,
   DeleteUserResponseType,
   OrderImpactResponseType,
@@ -21,7 +20,7 @@ import {
   UserHoldingsResponseType,
 } from "./response-types";
 
-const { request } = require("./request.js");
+import { request } from "./request";
 
 /**
  * @class SnapTradeFetch
@@ -39,20 +38,6 @@ class SnapTradeFetch {
   constructor(clientId: string, consumerKey: string) {
     this.clientId = clientId;
     this.consumerKey = consumerKey;
-  }
-
-  /**
-   * Gets API Status.
-   * @returns Promise<ApiStatusResponseType>
-   */
-  async getAPIStatus(): Promise<ApiStatusResponseType> {
-    const response = await request({
-      endpoint: "/api/v1/",
-      method: "get",
-      clientId: this.clientId,
-      consumerKey: this.consumerKey,
-    });
-    return response as Promise<ApiStatusResponseType>;
   }
 
   /** Authentication **/
