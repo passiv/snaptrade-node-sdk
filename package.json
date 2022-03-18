@@ -29,9 +29,9 @@
   ],
   "author": "Passiv",
   "license": "ISC",
-  "homepage": "https://passiv.com/snaptrade/",
+  "homepage": "https://snaptrade.com",
   "bugs": {
-    "url": "https://github.com/passiv/snaptrade-nodesdk/issues"
+    "url": "https://github.com/passiv/snaptrade-node-sdk/issues"
   },
   "devDependencies": {
     "typescript": "^4.5.4",
