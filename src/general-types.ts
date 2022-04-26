@@ -70,3 +70,8 @@ export interface ExchangeRateType {
   dst: CurrencyType;
   exchange_rate: number;
 }
+
+export interface PortfolioGroupType {
+  id: string;
+  name: string;
+}
