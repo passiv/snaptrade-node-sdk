@@ -579,7 +579,7 @@ class SnapTradeFetch {
     extraParams: { startDate: string; endDate: string }
   ): Promise<TransactionHistoryResponseType[]> {
     const response = await request({
-      endpoint: "/api/v1/symbols/activities",
+      endpoint: "/api/v1/activities",
       method: "get",
       consumerKey: this.consumerKey,
       defaultQueryParams: {
