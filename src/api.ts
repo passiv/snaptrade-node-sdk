@@ -4,7 +4,6 @@ import {
   BrokerageType,
   CurrencyType,
   ExchangeRateType,
-  PortfolioGroupType,
   UniversalSymbolType,
 } from "./general-types";
 import { DefaultQueryParams, OrderImpactBodyParams } from "./option-types";
@@ -14,6 +13,7 @@ import {
   DeleteUserResponseType,
   OrderImpactResponseType,
   OrderResponseType,
+  PortfolioGroupResponseType,
   RedirectURIResponseType,
   RegisterUserResponseType,
   SymbolsQuoteResponseType,
@@ -548,11 +548,11 @@ class SnapTradeFetch {
   /**
    * List of all portfolio groups.
    * @param {DefaultQueryParams} defaultQueryParams
-   * @returns Promise<PortfolioGroup[]>
+   * @returns Promise<PortfolioGroupResponseType>
    */
    async fetchPortfolioGroups(
     { userId, userSecret }: DefaultQueryParams
-   ): Promise<PortfolioGroupType[]> {
+   ): Promise<PortfolioGroupResponseType> {
     const response = await request({
       endpoint: "/api/v1/portfolioGroups",
       method: "get",
@@ -563,7 +563,7 @@ class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<PortfolioGroupType[]>;
+    return response as Promise<PortfolioGroupResponseType>;
   }
 
   /** Reporting **/
