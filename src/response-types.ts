@@ -4,6 +4,7 @@ import {
   BrokerageType,
   CurrencyType,
   ManualTradeSymbolType,
+  PortfolioGroupType,
   PositionType,
   SymbolType,
   TradeType,
@@ -130,4 +131,8 @@ export interface SymbolsQuoteResponseType extends ResponseType {
   last_trade_price: number;
   bid_size: number;
   ask_size: number;
+}
+
+export interface PortfolioGroupResponseType extends ResponseType {
+  data: PortfolioGroupType[]
 }
