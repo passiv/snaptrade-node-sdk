@@ -18,9 +18,9 @@ fetchUserHoldings({
 
 ```typescript
 const userHoldings = async () => {
-  const holdings = await snapTrade.fetchUserAccounts({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
+  const holdings = await snapTrade.fetchUserHoldings({
+    userId: 'USER_ID',
+    userSecret: 'USER_SECRET',
   });
   return holdings;
 };
@@ -44,8 +44,8 @@ fetchUserAccounts({
 ```typescript
 const userAccounts = async () => {
   const accounts = await snapTrade.fetchUserAccounts({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
+    userId: 'USER_ID',
+    userSecret: 'USER_SECRET',
   });
   return accounts;
 };
@@ -70,10 +70,10 @@ fetchAccount(
 const userAccount = async () => {
   const account = await snapTrade.fetchAccount(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId"
+    'accountId'
   );
   return account;
 };
@@ -98,10 +98,10 @@ fetchAccountBalances(
 const accountBalances = async () => {
   const accBalances = await snapTrade.fetchAccountBalances(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId"
+    'accountId'
   );
   return accBalances;
 };
@@ -126,10 +126,10 @@ fetchAccountPositions(
 const accountPositions = async () => {
   const accPositions = await snapTrade.fetchAccountPositions(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId"
+    'accountId'
   );
   return accPositions;
 };
