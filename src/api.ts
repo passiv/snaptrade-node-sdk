@@ -13,6 +13,7 @@ import {
   DeleteUserResponseType,
   OrderImpactResponseType,
   OrderResponseType,
+  PortfolioGroupPositionsResponseType,
   PortfolioGroupResponseType,
   RedirectURIResponseType,
   RegisterUserResponseType,
@@ -567,6 +568,29 @@ class SnapTradeFetch {
       },
     });
     return response as Promise<PortfolioGroupResponseType>;
+  }
+
+  /**
+   * List Portfolio Group positions.
+   * @param {DefaultQueryParams} defaultQueryParams
+   * @param portfolioGroupId
+   * @returns Promise<PortfolioGroupPositionsResponseType>
+   */
+  async fetchPortfolioGroupPrositions(
+    { userId, userSecret }: DefaultQueryParams,
+    portfolioGroupId: string
+  ): Promise<PortfolioGroupPositionsResponseType> {
+    const response = await request({
+      endpoint: `/api/v1/portfolioGroups/${portfolioGroupId}/positions`,
+      method: "get",
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+        userSecret,
+        userId,
+      },
+    });
+    return response as Promise<PortfolioGroupPositionsResponseType>;
   }
 
   /** Reporting **/
