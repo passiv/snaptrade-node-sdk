@@ -54,7 +54,7 @@ Generate a redirect URI to securely login a user to the SnapTrade Connection Por
 generateRedirectURI({
     userId,
     userSecret,
-  }: DefaultQueryParams): Promise<RedirectURIResponseType>
+  }: DefaultQueryParams, data: {broker: string; immediateRedirect: boolean; customRedirect: string}): Promise<RedirectURIResponseType>
 ```
 
 ##### Example:
@@ -62,8 +62,12 @@ generateRedirectURI({
 ```typescript
 const redirectURI = async () => {
   const uri = await snapTrade.generateRedirectURI({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
+    userId: 'USER_ID',
+    userSecret: 'USER_SECRET',
+  }, {
+    broker: 'ALPACA',
+    immediateRedirect: true,
+    customRedirect: 'https://passiv.com"
   });
   return uri;
 };
@@ -87,8 +91,8 @@ deleteUser({
 ```typescript
 const deleteUser = async () => {
   const deletedUser = await snapTrade.deleteUser({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
+    userId: 'USER_ID',
+    userSecret: 'USER_SECRET',
   });
   return deletedUser;
 };

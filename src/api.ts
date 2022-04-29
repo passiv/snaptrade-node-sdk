@@ -5,8 +5,8 @@ import {
   CurrencyType,
   ExchangeRateType,
   UniversalSymbolType,
-} from "./general-types";
-import { DefaultQueryParams, OrderImpactBodyParams } from "./option-types";
+} from './general-types';
+import { DefaultQueryParams, OrderImpactBodyParams } from './option-types';
 import {
   AccountPositionsResponseType,
   BrokerageAuthResponseType,
@@ -19,9 +19,9 @@ import {
   SymbolsQuoteResponseType,
   TransactionHistoryResponseType,
   UserHoldingsResponseType,
-} from "./response-types";
+} from './response-types';
 
-import { request } from "./request";
+import { request } from './request';
 
 /**
  * @class SnapTradeFetch
@@ -51,8 +51,8 @@ class SnapTradeFetch {
    */
   async registerUser(userId: string): Promise<RegisterUserResponseType> {
     const response = await request({
-      endpoint: "/api/v1/snapTrade/registerUser",
-      method: "post",
+      endpoint: '/api/v1/snapTrade/registerUser',
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -75,8 +75,8 @@ class SnapTradeFetch {
     userSecret,
   }: DefaultQueryParams): Promise<DeleteUserResponseType> {
     const response = await request({
-      endpoint: "/api/v1/snapTrade/deleteUser",
-      method: "post",
+      endpoint: '/api/v1/snapTrade/deleteUser',
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -90,22 +90,24 @@ class SnapTradeFetch {
   /**
    * Generate a redirect URI to securely login a user to the SnapTrade Connection Portal.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param {broker: string, immediateRedirect: boolean, customRedirect: string} data
    * @returns Promise<RedirectURIResponseType>
    */
 
-  async generateRedirectURI({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<RedirectURIResponseType> {
+  async generateRedirectURI(
+    { userId, userSecret }: DefaultQueryParams,
+    data: { broker: string; immediateRedirect: boolean; customRedirect: string }
+  ): Promise<RedirectURIResponseType> {
     const response = await request({
-      endpoint: "/api/v1/snapTrade/login",
-      method: "post",
+      endpoint: '/api/v1/snapTrade/login',
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
         userSecret,
         userId,
       },
+      data,
     });
     return response as Promise<RedirectURIResponseType>;
   }
@@ -122,8 +124,8 @@ class SnapTradeFetch {
     userSecret,
   }: DefaultQueryParams): Promise<UserHoldingsResponseType> {
     const response = await request({
-      endpoint: "/api/v1/holdings",
-      method: "get",
+      endpoint: '/api/v1/holdings',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -144,8 +146,8 @@ class SnapTradeFetch {
     userSecret,
   }: DefaultQueryParams): Promise<AccountType[]> {
     const response = await request({
-      endpoint: "/api/v1/accounts",
-      method: "get",
+      endpoint: '/api/v1/accounts',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -168,7 +170,7 @@ class SnapTradeFetch {
   ): Promise<AccountType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -192,7 +194,7 @@ class SnapTradeFetch {
   ): Promise<BalanceType[]> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/balances`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -215,7 +217,7 @@ class SnapTradeFetch {
   ): Promise<AccountPositionsResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/positions`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -242,7 +244,7 @@ class SnapTradeFetch {
   ): Promise<OrderResponseType[]> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -268,7 +270,7 @@ class SnapTradeFetch {
   ): Promise<OrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders/cancel`,
-      method: "post",
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -293,7 +295,7 @@ class SnapTradeFetch {
   ): Promise<SymbolsQuoteResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/quotes`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -316,8 +318,8 @@ class SnapTradeFetch {
     data: OrderImpactBodyParams
   ): Promise<OrderImpactResponseType> {
     const response = await request({
-      endpoint: "/api/v1/trade/impact",
-      method: "post",
+      endpoint: '/api/v1/trade/impact',
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -341,7 +343,7 @@ class SnapTradeFetch {
   ): Promise<OrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/trade/${tradeId}`,
-      method: "post",
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -364,8 +366,8 @@ class SnapTradeFetch {
     userSecret,
   }: DefaultQueryParams): Promise<BrokerageAuthResponseType[]> {
     const response = await request({
-      endpoint: "/api/v1/authorizations",
-      method: "get",
+      endpoint: '/api/v1/authorizations',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -388,7 +390,7 @@ class SnapTradeFetch {
   ): Promise<BrokerageAuthResponseType> {
     const response = await request({
       endpoint: `/api/v1/authorizations/${authorizationId}`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -411,7 +413,7 @@ class SnapTradeFetch {
   ): Promise<BrokerageAuthResponseType> {
     const response = await request({
       endpoint: `/api/v1/authorizations/${authorizationId}`,
-      method: "delete",
+      method: 'delete',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -430,8 +432,8 @@ class SnapTradeFetch {
    */
   async fetchBrokerages(): Promise<BrokerageType[]> {
     const response = await request({
-      endpoint: "/api/v1/brokerages",
-      method: "get",
+      endpoint: '/api/v1/brokerages',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -446,8 +448,8 @@ class SnapTradeFetch {
    */
   async fetchCurrencies(): Promise<CurrencyType[]> {
     const response = await request({
-      endpoint: "/api/v1/currencies",
-      method: "get",
+      endpoint: '/api/v1/currencies',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -462,8 +464,8 @@ class SnapTradeFetch {
    */
   async fetchExchangeCurrencies(): Promise<ExchangeRateType[]> {
     const response = await request({
-      endpoint: "/api/v1/currencies/rates",
-      method: "get",
+      endpoint: '/api/v1/currencies/rates',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -480,7 +482,7 @@ class SnapTradeFetch {
   async getCurrencyPair(currencyPair: string): Promise<ExchangeRateType> {
     const response = await request({
       endpoint: `/api/v1/currencies/rates/${currencyPair}`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -498,8 +500,8 @@ class SnapTradeFetch {
     substring: string;
   }): Promise<UniversalSymbolType[]> {
     const response = await request({
-      endpoint: "/api/v1/symbols",
-      method: "post",
+      endpoint: '/api/v1/symbols',
+      method: 'post',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -517,7 +519,7 @@ class SnapTradeFetch {
   async getSymbolDetailById(symbolId: string): Promise<UniversalSymbolType> {
     const response = await request({
       endpoint: `/api/v1/symbols/${symbolId}`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -534,7 +536,7 @@ class SnapTradeFetch {
   async getSymbolDetailByTicker(ticker: string): Promise<UniversalSymbolType> {
     const response = await request({
       endpoint: `/api/v1/symbols/${ticker}`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -550,12 +552,13 @@ class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @returns Promise<PortfolioGroupResponseType>
    */
-   async fetchPortfolioGroups(
-    { userId, userSecret }: DefaultQueryParams
-   ): Promise<PortfolioGroupResponseType> {
+  async fetchPortfolioGroups({
+    userId,
+    userSecret,
+  }: DefaultQueryParams): Promise<PortfolioGroupResponseType> {
     const response = await request({
-      endpoint: "/api/v1/portfolioGroups",
-      method: "get",
+      endpoint: '/api/v1/portfolioGroups',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -579,8 +582,8 @@ class SnapTradeFetch {
     extraParams: { startDate: string; endDate: string }
   ): Promise<TransactionHistoryResponseType[]> {
     const response = await request({
-      endpoint: "/api/v1/activities",
-      method: "get",
+      endpoint: '/api/v1/activities',
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
