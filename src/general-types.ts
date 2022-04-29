@@ -75,3 +75,10 @@ export interface PortfolioGroupType {
   id: string;
   name: string;
 }
+
+export interface PortfolioGroupPositionType {
+  symbol: SymbolType;
+  price: number;
+  units: number;
+  fractional_units: number;
+}
