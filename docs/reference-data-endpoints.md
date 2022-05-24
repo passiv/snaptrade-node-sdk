@@ -93,7 +93,7 @@ searchSymbols(data: {
 
 ```typescript
 const symbol = async () => {
-  const searchedSymbol = await snapTrade.searchSymbols({ substring: "apple" });
+  const searchedSymbol = await snapTrade.searchSymbols({ substring: 'apple' });
   return searchedSymbol;
 };
 ```
@@ -132,4 +132,44 @@ getSymbolDetailByTicker(ticker: string): Promise<UniversalSymbolType>
 const symbolDetail = async () => {
   const symbol = await snapTrade.getSymbolDetailByTicker("TSLA");
   return symbol
+```
+
+### _security types_
+
+Get a list of all defined security types
+
+##### Signature:
+
+```typescript
+fetchListOfSecurityTypes(): Promise<SecurityType[]>
+```
+
+##### Example:
+
+```typescript
+const securityTypes = async () => {
+  const listOfSecurityTypes = await snapTrade.fetchListOfSecurityTypes();
+  return listOfSecurityTypes
+```
+
+### _brokerage authorization types_
+
+Get a list of all defined Brokerage Authorization Type objects
+
+##### Signature:
+
+```typescript
+fetchListOfBrokerageAuthorizationTypes(extraParams: {
+    brokerage: string[];
+  }): Promise<BrokerageAuthorizationTypeObject[]>
+```
+
+##### Example:
+
+```typescript
+const brokerageAuthorizationTypesObject = async () => {
+  const listOfBrokerageAuthorizationTypesObject = await snapTrade.fetchListOfBrokerageAuthorizationTypes( {
+      brokerage: ['QUESTRADE', 'ALPACA']
+    });
+  return listOfBrokerageAuthorizationTypesObject
 ```

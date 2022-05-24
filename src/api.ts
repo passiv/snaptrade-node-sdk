@@ -1,9 +1,11 @@
 import {
   AccountType,
   BalanceType,
+  BrokerageAuthorizationTypeObject,
   BrokerageType,
   CurrencyType,
   ExchangeRateType,
+  SecurityType,
   UniversalSymbolType,
 } from './general-types';
 import { DefaultQueryParams, OrderImpactBodyParams } from './option-types';
@@ -546,6 +548,45 @@ class SnapTradeFetch {
     return response as Promise<UniversalSymbolType>;
   }
 
+  /**
+   * Get a list of all defined security types
+   * @returns Promise<SecurityType[]>
+   */
+  async fetchListOfSecurityTypes(): Promise<SecurityType[]> {
+    const response = await request({
+      endpoint: '/api/v1/securityTypes',
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+      },
+    });
+    return response as Promise<SecurityType[]>;
+  }
+
+  /**
+   * Get a list of all defined Brokerage Authorization Type objects
+   * @param { brokerage: string[] } extraParams
+   * @returns Promise<BrokerageAuthorizationTypeObject[]>
+   */
+  async fetchListOfBrokerageAuthorizationTypes(extraParams: {
+    brokerage: string[];
+  }): Promise<BrokerageAuthorizationTypeObject[]> {
+    const extraParamsToString = {
+      brokerage: extraParams.brokerage.toString(),
+    };
+    const response = await request({
+      endpoint: '/api/v1/brokerageAuthorizationTypes',
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+      },
+      extraParams: extraParamsToString,
+    });
+    return response as Promise<BrokerageAuthorizationTypeObject[]>;
+  }
+
   /** Portfolio Management **/
 
   /**
@@ -582,7 +623,7 @@ class SnapTradeFetch {
   ): Promise<PortfolioGroupPositionsResponseType> {
     const response = await request({
       endpoint: `/api/v1/portfolioGroups/${portfolioGroupId}/positions`,
-      method: "get",
+      method: 'get',
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,

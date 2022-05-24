@@ -49,7 +49,7 @@ export interface TradeType {
   id: string;
   account: AccountType;
   order_type: string;
-  time_in_force: "FOK" | "Day";
+  time_in_force: 'FOK' | 'Day';
   symbol: ManualTradeSymbolType;
   action: string;
   units: number;
@@ -81,4 +81,22 @@ export interface PortfolioGroupPositionType {
   price: number;
   units: number;
   fractional_units: number;
+}
+
+export interface SecurityType {
+  id: string;
+  code: string;
+  description: string;
+  is_supported: boolean;
+}
+
+export interface BrokerageAuthorizationTypeObject {
+  id: string;
+  type: 'read' | 'trade';
+  auth_type: string;
+  brokerage: {
+    id: string;
+    name: string;
+    slug: string;
+  };
 }
