@@ -118,3 +118,4 @@ Licensed under [Apache License 2.0][2].
 [trading endpoints]: docs/trading-endpoints.md
 [connections endpoints]: docs/connections-endpoints.md
 [reference data endpoints]: docs/reference-data-endpoints.md
+[transaction and reporting]: docs/transaction-and-reporting.md
