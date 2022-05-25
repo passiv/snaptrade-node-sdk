@@ -6,6 +6,7 @@ import {
   CurrencyType,
   ExchangeRateType,
   SecurityType,
+  StockExchange,
   UniversalSymbolType,
 } from './general-types';
 import { DefaultQueryParams, OrderImpactBodyParams } from './option-types';
@@ -585,6 +586,22 @@ class SnapTradeFetch {
       extraParams: extraParamsToString,
     });
     return response as Promise<BrokerageAuthorizationTypeObject[]>;
+  }
+
+  /**
+   * Get a list of stock exchanges and their suffixes
+   * @returns Promise<StockExchange[]>
+   */
+  async fetchListOfStockExchanges(): Promise<StockExchange[]> {
+    const response = await request({
+      endpoint: '/api/v1/exchanges',
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+      },
+    });
+    return response as Promise<StockExchange[]>;
   }
 
   /** Portfolio Management **/

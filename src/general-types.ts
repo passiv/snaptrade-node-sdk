@@ -100,3 +100,14 @@ export interface BrokerageAuthorizationTypeObject {
     slug: string;
   };
 }
+
+export interface StockExchange {
+  id: string;
+  code: string;
+  mic_code: string;
+  name: string;
+  timezone: string;
+  start_time: string;
+  close_time: string;
+  suffix: string;
+}

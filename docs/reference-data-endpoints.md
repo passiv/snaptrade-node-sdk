@@ -173,3 +173,23 @@ const brokerageAuthorizationTypesObject = async () => {
     });
   return listOfBrokerageAuthorizationTypesObject
 ```
+
+### _stock exchanges and suffixes_
+
+Get a list of stock exchanges and their suffixes
+
+##### Signature:
+
+```typescript
+fetchListOfStockExchanges(): Promise<StockExchange[]>
+```
+
+##### Example:
+
+```typescript
+const getStockExchangesAndSuffixes = async () => {
+  const listOfStockExchangesAndSuffixes =
+    await snapTrade.fetchListOfStockExchanges();
+  return listOfStockExchangesAndSuffixes;
+};
+```
