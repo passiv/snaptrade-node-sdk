@@ -20,12 +20,12 @@ fetchOrdersHistory(
 const ordersHistory = async () => {
   const orders = await snapTrade.fetchOrdersHistory(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId",
+    'accountId',
     {
-      status: "all" | "open" | "executed", // defaults to all if not passed in
+      status: 'all' | 'open' | 'executed', // defaults to all if not passed in
       days: 90, // defaults to 90 if not passed in
     }
   );
@@ -43,7 +43,7 @@ Get symbol quotes
 fetchSymbolsQuote(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { symbolIds: string; use_ticker: boolean }
+    extraParams: { symbols: string; use_ticker: boolean }
   ): Promise<SymbolsQuoteResponseType>
 ```
 
@@ -53,12 +53,12 @@ fetchSymbolsQuote(
 const symbolQuotes = async () => {
   const quotes = await snapTrade.fetchSymbolsQuote(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId",
+    'accountId',
     {
-      symbolIds: "TSLA", // universal_symbol_id or ticker to get quotes for.
+      symbols: 'TSLA', // universal_symbol_id or ticker to get quotes for.
       use_ticker: true, // should be set to true if providing tickers.
     }
   );
@@ -86,12 +86,12 @@ cancelOpenOrder(
 const cancelOrder = async () => {
   const cancel = await snapTrade.cancelOpenOrder(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "accountId",
+    'accountId',
     {
-      brokerage_order_id: "BROKERORDERID",
+      brokerage_order_id: 'BROKERORDERID',
     }
   );
   return cancel;
@@ -117,17 +117,17 @@ orderImpact(
 const orderImpact = async () => {
   const impact = await snapTrade.orderImpact(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
     {
-      account_id: "id",
-      action: "BUY" | "SELL",
-      order_type: "Limit" | "Market",
+      account_id: 'id',
+      action: 'BUY' | 'SELL',
+      order_type: 'Limit' | 'Market',
       price: 10,
-      time_in_force: "Day",
+      time_in_force: 'Day',
       units: 1,
-      universal_symbol_id: "symbolid",
+      universal_symbol_id: 'symbolid',
     }
   );
   return impact;
@@ -153,10 +153,10 @@ placeOrder(
 const placeOrder = async () => {
   const placedOrder = await snapTrade.placeOrder(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "tradeId"
+    'tradeId'
   );
   return placedOrder;
 };

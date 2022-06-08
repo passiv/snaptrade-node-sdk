@@ -295,7 +295,7 @@ class SnapTradeFetch {
   async fetchSymbolsQuote(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { symbolIds: string; use_ticker: boolean }
+    extraParams: { symbols: string; use_ticker: boolean }
   ): Promise<SymbolsQuoteResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/quotes`,
