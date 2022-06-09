@@ -56,6 +56,14 @@ export interface TradeType {
   price: number;
 }
 
+export interface CashRestrictionType {
+  id: string;
+  account: string;
+  currency: string;
+  type: 'ALLOCATE_MAX' | 'RETAIN_MIN';
+  amount: number;
+}
+
 export interface BrokerageType {
   id: string;
   name: string;
@@ -63,12 +71,6 @@ export interface BrokerageType {
   authorized_types: {
     type: string;
   }[];
-}
-
-export interface ExchangeRateType {
-  src: CurrencyType;
-  dst: CurrencyType;
-  exchange_rate: number;
 }
 
 export interface PortfolioGroupType {
@@ -83,31 +85,13 @@ export interface PortfolioGroupPositionType {
   fractional_units: number;
 }
 
-export interface SecurityType {
+export interface InvestmentAccountType {
   id: string;
-  code: string;
-  description: string;
-  is_supported: boolean;
-}
-
-export interface BrokerageAuthorizationTypeObject {
-  id: string;
-  type: 'read' | 'trade';
-  auth_type: string;
-  brokerage: {
-    id: string;
-    name: string;
-    slug: string;
-  };
-}
-
-export interface StockExchange {
-  id: string;
-  code: string;
-  mic_code: string;
+  brokerage_authorization: string;
+  portfolio_group: string;
   name: string;
-  timezone: string;
-  start_time: string;
-  close_time: string;
-  suffix: string;
+  number: string;
+  institution_name: string;
+  created_date: string;
+  cash_restrictions: CashRestrictionType[];
 }
