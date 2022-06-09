@@ -1,6 +1,6 @@
 {
   "name": "@snaptrade/js-fetch-api",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "A NodeJS sdk for SnapTrade API.",
   "main": "./dist/SnapTrade.umd.js",
   "module": "./dist/SnapTrade.es.js",
@@ -16,7 +16,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && tsc src/api.ts --declaration --emitDeclarationOnly --esModuleInterop --outDir dist"
+    "build": "tsc && vite build && tsc src/api.ts --declaration --emitDeclarationOnly --esModuleInterop --outDir dist",
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
