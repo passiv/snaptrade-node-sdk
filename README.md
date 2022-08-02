@@ -100,6 +100,7 @@ const deleteUser = async () => {
 
 Check out the documentation below for making requests to other SnapTrade API endpoints using this sdk:
 
+- [Helper Functions]
 - [Account Information Endpoints]
 - [Trading Endpoints]
 - [Connections Endpoints]
@@ -115,6 +116,7 @@ Licensed under [Apache License 2.0][2].
 [1]: https://docs.snaptrade.com/reference/getting-started
 [contact]: mailto:api@snaptrade.com
 [2]: LICENSE
+[helper functions]: docs/helper-functions.md
 [account information endpoints]: docs/account-information-endpoints.md
 [trading endpoints]: docs/trading-endpoints.md
 [connections endpoints]: docs/connections-endpoints.md

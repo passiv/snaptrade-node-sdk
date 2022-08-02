@@ -1,7 +1,7 @@
-const axios = require("axios");
-const crypto = require("crypto");
+const axios = require('axios');
+const crypto = require('crypto');
 
-const baseAPI = "https://api.passiv.com";
+const baseAPI = 'https://api.passiv.com';
 
 const JSONstringifyOrder = (obj: any) => {
   var allKeys: any = [];
@@ -32,9 +32,9 @@ const signRequest = (req: any, endpoint: string, consumerK: string) => {
 
   const sigContent = JSONstringifyOrder(sigObject);
 
-  const hmac = crypto.createHmac("sha256", consumerKey);
+  const hmac = crypto.createHmac('sha256', consumerKey);
 
-  const signature = hmac.update(sigContent).digest("base64");
+  const signature = hmac.update(sigContent).digest('base64');
 
   req.defaults.headers.Signature = signature;
   return req;
@@ -46,7 +46,7 @@ const signRequest = (req: any, endpoint: string, consumerK: string) => {
 
 export const request = async (options: {
   endpoint: string;
-  method: "get" | "post" | "put" | "delete";
+  method: 'get' | 'post' | 'put' | 'delete';
   consumerKey: string;
   defaultQueryParams: {
     clientId: string;
@@ -92,7 +92,7 @@ export const request = async (options: {
   let response;
   try {
     switch (method) {
-      case "get":
+      case 'get':
         const getReq = await req(endpoint);
         response = {
           data: getReq.data,
@@ -102,7 +102,7 @@ export const request = async (options: {
           },
         };
         break;
-      case "post":
+      case 'post':
         const postReq = await req.post(endpoint, data);
         response = {
           data: postReq.data,
@@ -112,7 +112,7 @@ export const request = async (options: {
           },
         };
         break;
-      case "delete":
+      case 'delete':
         const deleteReq = await req.delete(endpoint);
         response = {
           data: deleteReq.data,

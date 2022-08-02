@@ -22,9 +22,13 @@ import {
   TransactionHistoryResponseType,
   UniversalSymbolResponseType,
   UserHoldingsResponseType,
+  RetrieveJWTResponseType,
 } from './response-types';
-
 import { request } from './request';
+
+const { privateDecrypt, constants, createDecipheriv } = require('crypto');
+const NodeRSA = require('node-rsa');
+const fs = require('fs');
 
 /**
  * @class SnapTradeFetch
@@ -44,15 +48,122 @@ class SnapTradeFetch {
     this.consumerKey = consumerKey;
   }
 
+  /** Helper Functions */
+
+  /**
+   * Generate RSA private/public key
+   * @param {string} path - path to store the private key
+   * @returns string
+   */
+  generateRSA(path: string): string {
+    const key = new NodeRSA({ b: 4096 });
+    const publicKey = key.exportKey('openssh-public-pem');
+    const privateKey = key.exportKey('pkcs8-private-pem');
+
+    try {
+      fs.writeFileSync(path, JSON.stringify({ privateKey }));
+      return publicKey;
+    } catch (err) {
+      return JSON.stringify(err);
+    }
+  }
+
+  /**
+   * Decrypt encrypted shared key
+   * @param {string} privateKeyFilePath - path to retrieve the private key
+   * @param {string} encryptedSharedKey - encrypted shared key
+   * @returns string
+   */
+  decryptSharedKey(
+    privateKeyFilePath: string,
+    encryptedSharedKey: string
+  ): string {
+    try {
+      const rawFile = fs.readFileSync(privateKeyFilePath);
+      const privateKey = JSON.parse(rawFile).privateKey;
+      if (privateKey) {
+        const buffer = Buffer.from(encryptedSharedKey, 'base64');
+        const decryptedKey = privateDecrypt(
+          {
+            key: privateKey.toString(),
+            padding: constants.RSA_PKCS1_OAEP_PADDING,
+          },
+          buffer
+        );
+        return decryptedKey;
+      } else {
+        throw 'Cannot find the private key. Please check the path provided and make sure the JSON file with a privateKey exists.';
+      }
+    } catch (err) {
+      return JSON.stringify(err);
+    }
+  }
+
+  /**
+   * Decrypt encrypted message
+   * @param {string} sharedKey
+   * @param {encryptedMessage: string, tag: string, nonce: string} encryptedMessageData
+   * @returns string
+   */
+  decryptMessage(
+    sharedKey: string,
+    encryptedMessageData: {
+      encryptedMessage: string;
+      tag: string;
+      nonce: string;
+    }
+  ): string {
+    let iv = Buffer.from(encryptedMessageData.nonce).toString('base64');
+
+    let encryptedText = Buffer.from(
+      encryptedMessageData.encryptedMessage
+    ).toString('base64');
+    let decipher = createDecipheriv('aes-256-ocb', Buffer.from(sharedKey), iv, {
+      authTagLength: 32,
+    });
+    let decrypted = decipher.update(encryptedText);
+
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+    return decrypted.toString();
+  }
+
   /** Authentication **/
+
+  /**
+   * Retrieve encrypted JWT token
+   * @param {DefaultQueryParams} defaultQueryParams
+   * @returns  Promise<RetrieveJWTResponseType>
+   */
+
+  async retrieveJWT({
+    userId,
+    userSecret,
+  }: DefaultQueryParams): Promise<RetrieveJWTResponseType> {
+    const response = await request({
+      endpoint: '/api/v1/snapTrade/encryptedJWT',
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+        userSecret,
+        userId,
+      },
+    });
+
+    return response as Promise<RetrieveJWTResponseType>;
+  }
 
   /**
    * Register user with SnapTrade
    * in order to create secure brokerage authorizations.
-   * @param {string} userId - SnapTrade User ID
+   * @param {userId: string, rsaPublicKey?: string} data
    * @returns Promise<RegisterUserResponseType>
    */
-  async registerUser(userId: string): Promise<RegisterUserResponseType> {
+  async registerUser(data: {
+    userId: string;
+    rsaPublicKey?: string;
+  }): Promise<RegisterUserResponseType> {
     const response = await request({
       endpoint: '/api/v1/snapTrade/registerUser',
       method: 'post',
@@ -60,9 +171,7 @@ class SnapTradeFetch {
       defaultQueryParams: {
         clientId: this.clientId,
       },
-      data: {
-        userId,
-      },
+      data,
     });
     return response as Promise<RegisterUserResponseType>;
   }

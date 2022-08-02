@@ -25,6 +25,17 @@ export interface ApiStatusResponseType extends ResponseType {
   };
 }
 
+export interface RetrieveJWTResponseType extends ResponseType {
+  data: {
+    sharedKey: string;
+    encryptedMessageData: {
+      encryptedMessage: string;
+      tag: string;
+      nonce: string;
+    };
+  };
+}
+
 export interface RegisterUserResponseType extends ResponseType {
   data: {
     userId: string;

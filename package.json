@@ -1,6 +1,6 @@
 {
   "name": "@snaptrade/js-fetch-api",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A NodeJS sdk for SnapTrade API.",
   "main": "./dist/SnapTrade.umd.js",
   "module": "./dist/SnapTrade.es.js",
@@ -24,23 +24,29 @@
     "url": "git+https://github.com/passiv/snaptrade-node-sdk"
   },
   "keywords": [
+    "passiv",
     "snaptrade",
     "snaptradeapi",
     "snaptradesdk",
     "snaptradejssdk"
   ],
-  "author": "Passiv",
+  "author": {
+    "name": "Shayan Abedi",
+    "email": "shayan.abedi@passiv.com",
+    "url": "https://shayanabedi.com"
+  },
   "license": "ISC",
   "homepage": "https://snaptrade.com",
   "bugs": {
     "url": "https://github.com/passiv/snaptrade-node-sdk/issues"
   },
   "devDependencies": {
+    "@types/node": "17.0.21",
     "typescript": "^4.5.4",
-    "vite": "^2.8.0",
-    "@types/node": "17.0.21"
+    "vite": "^2.8.0"
   },
   "dependencies": {
-    "axios": "^0.25.0"
+    "axios": "^0.25.0",
+    "node-rsa": "^1.1.1"
   }
 }
