@@ -202,13 +202,18 @@ class SnapTradeFetch {
   /**
    * Generate a redirect URI to securely login a user to the SnapTrade Connection Portal.
    * @param {DefaultQueryParams} defaultQueryParams
-   * @param {broker: string, immediateRedirect: boolean, customRedirect: string} data
+   * @param {broker: string, immediateRedirect: boolean, customRedirect: string, reconnect: string} data
    * @returns Promise<RedirectURIResponseType>
    */
 
   async generateRedirectURI(
     { userId, userSecret }: DefaultQueryParams,
-    data: { broker: string; immediateRedirect: boolean; customRedirect: string }
+    data: {
+      broker: string;
+      immediateRedirect: boolean;
+      customRedirect: string;
+      reconnect: string;
+    }
   ): Promise<RedirectURIResponseType> {
     const response = await request({
       endpoint: '/api/v1/snapTrade/login',
@@ -795,7 +800,7 @@ class SnapTradeFetch {
   /**
    * Get transaction history for a user
    * @param {DefaultQueryParams} defaultQueryParams
-   * @param { startDate: string; endDate: string } extraParams
+   * @param { startDate: string; endDate: string, accounts: string } extraParams
    * @returns Promise<TransactionHistoryResponseType[]>
    */
   async fetchTransactionHistory(

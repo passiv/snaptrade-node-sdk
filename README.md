@@ -83,27 +83,37 @@ const registerUser = async () => {
 
 Generate a redirect URI to securely login a user to the SnapTrade Connection Portal.
 
+- optional parameters:
+  - broker: provide a `broker slug` to redirect user directly to the broker portal (or show the auth modal)
+  - immediateRedirect: if set to `true`, user gets redirected back to the partner's app immediately after making a connection.
+  - customRedirect: if need to use a different `redirect url` than the default one.
+  - reconnect: provide a `authorization id` of a broken connection to reconnect.
+
 ##### Signature:
 
 ```typescript
 generateRedirectURI({
     userId,
     userSecret,
-  }: DefaultQueryParams, data: {broker: string; immediateRedirect: boolean; customRedirect: string}): Promise<RedirectURIResponseType>
+  }: DefaultQueryParams, data: {broker: string; immediateRedirect: boolean; customRedirect: string, reconnect: string}): Promise<RedirectURIResponseType>
 ```
 
 ##### Example:
 
 ```typescript
 const redirectURI = async () => {
-  const uri = await snapTrade.generateRedirectURI({
-    userId: 'USER_ID',
-    userSecret: 'USER_SECRET',
-  }, {
-    broker: 'ALPACA',
-    immediateRedirect: true,
-    customRedirect: 'https://passiv.com"
-  });
+  const uri = await snapTrade.generateRedirectURI(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    {
+      broker: 'ALPACA',
+      immediateRedirect: true,
+      customRedirect: 'https://passiv.com',
+      reconnect: 'b5f262d-4bb9-365d-888a-202bd3b15fa1',
+    }
+  );
   return uri;
 };
 ```
