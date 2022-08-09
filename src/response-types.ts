@@ -5,6 +5,8 @@ import {
   CurrencyType,
   InvestmentAccountType,
   ManualTradeSymbolType,
+  OptionPosition,
+  OrderType,
   PortfolioGroupPositionType,
   PortfolioGroupType,
   PositionType,
@@ -61,9 +63,27 @@ export interface UserHoldingsResponseType extends ResponseType {
     account: AccountType;
     balances: BalanceType[];
     positions: PositionType[];
-    units: number;
-    price: number;
-  }[];
+    option_positions: OptionPosition[];
+    orders: OrderType[];
+    errors: null | string;
+    total_value: {
+      currency: string;
+      value: number;
+    };
+  };
+}
+
+export interface AccountHoldingsResponseType extends ResponseType {
+  data: {
+    account: AccountType;
+    balances: BalanceType[];
+    positions: PositionType[];
+    option_positions: OptionPosition[];
+    orders: OrderType[];
+    cache_timestamp: string;
+    cache_expiry: string;
+    cache_expired: string;
+  };
 }
 
 export interface AccountResponseType extends ResponseType {
@@ -83,25 +103,7 @@ export interface AccountPositionsResponseType extends ResponseType {
 }
 
 export interface OrderResponseType extends ResponseType {
-  data: {
-    brokerage_order_id: string;
-    status: string;
-    symbol: string;
-    universal_symbol: UniversalSymbolType;
-    action: string;
-    total_quantity: number;
-    open_quantity: number;
-    canceled_quantity: number;
-    filled_quantity: number;
-    execution_price: number;
-    limit_price: number;
-    stop_price: number;
-    order_type: string;
-    time_in_force: 'FOK' | 'Day';
-    time_placed: string;
-    time_updated: string;
-    expiry_date: string;
-  };
+  data: OrderType;
 }
 
 export interface OrderImpactResponseType extends ResponseType {

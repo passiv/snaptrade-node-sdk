@@ -23,6 +23,7 @@ import {
   UniversalSymbolResponseType,
   UserHoldingsResponseType,
   RetrieveJWTResponseType,
+  AccountHoldingsResponseType,
 } from './response-types';
 import { request } from './request';
 
@@ -234,12 +235,12 @@ class SnapTradeFetch {
   /**
    * List all accounts for the user, plus balances and positions for each account.
    * @param {DefaultQueryParams} defaultQueryParams
-   * @returns Promise<UserHoldingsResponseType>
+   * @returns Promise<UserHoldingsResponseType[]>
    */
   async fetchUserHoldings({
     userId,
     userSecret,
-  }: DefaultQueryParams): Promise<UserHoldingsResponseType> {
+  }: DefaultQueryParams): Promise<UserHoldingsResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/holdings',
       method: 'get',
@@ -250,7 +251,30 @@ class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<UserHoldingsResponseType>;
+    return response as Promise<UserHoldingsResponseType[]>;
+  }
+
+  /**
+   * Get a specific account for the user, plus balances and positions for that account.
+   * @param {DefaultQueryParams} defaultQueryParams
+   * @param accountId: string
+   * @returns Promise<AccountHoldingsResponseType>
+   */
+  async fetchAccountHoldings(
+    { userId, userSecret }: DefaultQueryParams,
+    accountId: string
+  ): Promise<AccountHoldingsResponseType> {
+    const response = await request({
+      endpoint: `/api/v1/accounts/${accountId}/holdings`,
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+        userSecret,
+        userId,
+      },
+    });
+    return response as Promise<AccountHoldingsResponseType>;
   }
 
   /**

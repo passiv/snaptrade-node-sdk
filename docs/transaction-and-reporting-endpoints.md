@@ -9,7 +9,7 @@ Get transaction history for a user
 ```typescript
 fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
-    extraParams: { startDate: string; endDate: string }
+    extraParams: { startDate: string; endDate: string, accounts: string }
   ): Promise<TransactionHistoryResponseType[]>
 ```
 

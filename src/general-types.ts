@@ -95,3 +95,38 @@ export interface InvestmentAccountType {
   created_date: string;
   cash_restrictions: CashRestrictionType[];
 }
+
+export interface OrderType {
+  brokerage_order_id: string;
+  status: string;
+  symbol: string;
+  universal_symbol: UniversalSymbolType;
+  action: string;
+  total_quantity: number;
+  open_quantity: number;
+  canceled_quantity: number;
+  filled_quantity: number;
+  execution_price: number;
+  limit_price: number;
+  stop_price: number;
+  order_type: string;
+  time_in_force: 'FOK' | 'Day';
+  time_placed: string;
+  time_updated: string;
+  expiry_date: string;
+}
+
+export interface OptionPosition {
+  symbol: {
+    id: string;
+    description: string;
+    option_symbol: string;
+    local_id: string;
+    security_type: {};
+    listing_exchange: {};
+    is_quotable: boolean;
+    is_tradable: boolean;
+  };
+  price: number;
+  currency: CurrencyType;
+}

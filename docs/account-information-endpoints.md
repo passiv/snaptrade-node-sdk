@@ -26,6 +26,34 @@ const userHoldings = async () => {
 };
 ```
 
+### _user holdings (account specific)_
+
+Get a specific account for the user, plus balances and positions for that account.
+
+##### Signature:
+
+```typescript
+fetchAccountHoldings(
+    { userId, userSecret }: DefaultQueryParams,
+    accountId: string
+  ): Promise<AccountHoldingsResponseType>
+```
+
+##### Example:
+
+```typescript
+const accountHoldings = async () => {
+  const holdings = await snapTrade.fetchUserHoldings(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    'accountId'
+  );
+  return holdings;
+};
+```
+
 ### _user accounts_
 
 List all investment accounts for the user.
