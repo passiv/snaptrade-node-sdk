@@ -1,25 +1,43 @@
-# @snaptrade/js-fetch-api
+<br>
 
-A SnapTrade NodeJS sdk to help you make requests to the [SnapTrade API][1] endpoints more easily.
+<div align="center">
+  <img src="https://bookface-images.s3.amazonaws.com/logos/90412fbc5679b873ae4756218a6fb86d0f4c99c2.png" alt="snaptrade">
+</div>
+<h1 align="center">@snaptrade/js-fetch-api</h1>
+<h3 align="center">A SnapTrade NodeJS sdk to help you make requests to the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a> endpoints more easily.</h3>
+<br>
+<p>Contact us to schedule a demo and get a consumer key: <a href="mailto:api@snaptrade.com">api@snaptrade.com</a></p>
+<br>
 
-Contact us to schedule a demo and get a consumer key: [api@snaptrade.com][contact].
+## [![NPM Version](https://img.shields.io/npm/v/@snaptrade/js-fetch-api.svg?style=flat-square)](https://www.npmjs.com/package/@snaptrade/js-fetch-api)
+
+## [![NPM Downloads](https://img.shields.io/npm/dm/@snaptrade/js-fetch-api.svg?style=flat-square)](https://www.npmjs.com/package/@snaptrade/js-fetch-api)
+
+## 📖 Table of Contents
+
+- [⚙️ Requirements](#⚙️-requirements)
+- [🚀 Getting Started](#🚀-getting-started)
+- [🕵🏼‍♂️ Authentication](#🕵🏼‍♂️-authentication)
+  - [Register user](#register-user)
+  - [Login user](#login-user)
+  - [Delete user](#delete-user)
+- [📑 Full Documentation](#📑-full-documentation)
+- [👨🏼‍⚖️ License & Copyrights](#👨🏼‍⚖️-license--copyrights)
 
 ---
 
-## Requirements
+## ⚙️ Requirements
 
 - Node 17 or later
+- You need to have a **clientID** and a **consumerKey**. If you don't have one, please send us an [email][contact].
 
-## Installation
+---
 
-```
+## 🚀 Getting Started
+
+```shell
 npm i @snaptrade/js-fetch-api
 ```
-
-## Getting Started
-
-- Before getting started, you will need a **clientID** and a **consumerKey**. If you don't have one, please send us an [email][contact]
-  to get a new one.
 
 **Note** : Your consumerKey should always remain a secret! Never hard code it!
 
@@ -30,19 +48,36 @@ const const snapTrade = new SnapTrade(
   "CLIENT_ID",
   "CONSUMER_KEY"
 );
-
-// Register a new user
-const registerUser = async () => {
-  const registeredUser = await snapTrade.registerUser(
-    "USER_ID"
-  );
-  return registeredUser;
-};
 ```
 
 ---
 
-## Authentication
+## 🕵🏼‍♂️ Authentication
+
+### _register user_
+
+Register user with SnapTrade in order to create secure brokerage authorizations.
+
+##### Signature:
+
+```typescript
+ registerUser(data: {
+    userId: string;
+    rsaPublicKey?: string;
+  }): Promise<RegisterUserResponseType>
+```
+
+##### Example:
+
+```typescript
+const registerUser = async () => {
+  const registeredUser = await snapTrade.registerUser({
+    userId: 'USER_ID',
+    rsaPublicKey: 'ssh-rsa RSA_PUBLIC_KEY', //only required if RSA is enabled for the partner
+  });
+  return registeredUser;
+};
+```
 
 ### _login user_
 
@@ -98,7 +133,11 @@ const deleteUser = async () => {
 };
 ```
 
-Check out the documentation below for making requests to other SnapTrade API endpoints using this sdk:
+---
+
+## 📑 Full Documentation
+
+Documentations for making requests to other SnapTrade API endpoints using this sdk:
 
 - [Helper Functions]
 - [Account Information Endpoints]
@@ -109,11 +148,10 @@ Check out the documentation below for making requests to other SnapTrade API end
 
 ---
 
-## License & copyrights
+## 👨🏼‍⚖️ License & copyrights
 
 Licensed under [Apache License 2.0][2].
 
-[1]: https://docs.snaptrade.com/reference/getting-started
 [contact]: mailto:api@snaptrade.com
 [2]: LICENSE
 [helper functions]: docs/helper-functions.md
