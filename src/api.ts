@@ -800,7 +800,7 @@ class SnapTradeFetch {
    */
   async fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
-    extraParams: { startDate: string; endDate: string }
+    extraParams: { startDate: string; endDate: string; accounts: string }
   ): Promise<TransactionHistoryResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/activities',
