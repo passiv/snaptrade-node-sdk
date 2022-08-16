@@ -212,10 +212,10 @@ export class SnapTradeFetch {
   async generateRedirectURI(
     { userId, userSecret }: DefaultQueryParams,
     data: {
-      broker: string;
-      immediateRedirect: boolean;
-      customRedirect: string;
-      reconnect: string;
+      broker?: string;
+      immediateRedirect?: boolean;
+      customRedirect?: string;
+      reconnect?: string;
     }
   ): Promise<RedirectURIResponseType> {
     const response = await request({
@@ -383,7 +383,7 @@ export class SnapTradeFetch {
   async fetchOrdersHistory(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { status: string; days: number }
+    extraParams?: { status?: string; days?: number }
   ): Promise<OrderResponseType[]> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders`,
@@ -434,7 +434,7 @@ export class SnapTradeFetch {
   async fetchSymbolsQuote(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { symbols: string; use_ticker: boolean }
+    extraParams: { symbols: string; use_ticker?: boolean }
   ): Promise<SymbolsQuoteResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/quotes`,
@@ -831,7 +831,7 @@ export class SnapTradeFetch {
    */
   async fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
-    extraParams: { startDate: string; endDate: string; accounts: string }
+    extraParams?: { startDate?: string; endDate?: string; accounts?: string }
   ): Promise<TransactionHistoryResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/activities',
