@@ -5,7 +5,7 @@
 </div>
 <h1 align="center">snaptrade-node</h1>
 <br>
-<h2 align="center">The official NodeJS library for the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a> API.</h2>
+<h2 align="center">The official NodeJS library for the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a>.</h2>
 <br>
 <p>Contact us to schedule a demo and get a consumer key: <a href="mailto:api@snaptrade.com">api@snaptrade.com</a></p>
 <br>
@@ -43,10 +43,7 @@ npm install snaptrade-node
 ```typescript
 import { SnapTradeFetch } from 'snaptrade-node';
 
-const const snapTrade = new SnapTradeFetch(
-  "CLIENT_ID",
-  "CONSUMER_KEY"
-);
+const snapTrade = new SnapTradeFetch('CLIENT_ID', 'CONSUMER_KEY');
 ```
 
 ---

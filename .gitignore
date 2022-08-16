@@ -3,3 +3,7 @@ node_modules
 
 # dist folder
 dist/
+
+# Parcel related files
+.cache
+.parcel-cache
