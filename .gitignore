@@ -1,7 +1,7 @@
 # npm packages
 node_modules
 
-# dist folder
+# packaging
 dist/
 
 # Parcel related files
