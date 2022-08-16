@@ -1,35 +1,31 @@
 {
-  "name": "@snaptrade/js-fetch-api",
-  "version": "1.2.0",
-  "description": "A NodeJS sdk for SnapTrade API.",
-  "main": "./dist/SnapTrade.umd.js",
-  "module": "./dist/SnapTrade.es.js",
+  "name": "snaptrade-node",
+  "version": "1.0.0",
+  "description": "The official NodeJS library for the SnapTrade API.",
+  "source": "src/index.ts",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "dist/types.d.ts",
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": {
-      "import": "./dist/SnapTrade.es.js",
-      "require": "./dist/SnapTrade.umd.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build && tsc src/api.ts --declaration --emitDeclarationOnly --esModuleInterop --outDir dist",
+    "watch": "tsc && parcel watch",
+    "build": "tsc && parcel build",
+    "prepare": "npm run build",
     "publish": "npm run build && npm publish",
-    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/passiv/snaptrade-node-sdk"
   },
   "keywords": [
-    "passiv",
     "snaptrade",
     "snaptradeapi",
     "snaptradesdk",
-    "snaptradejssdk"
+    "snaptradenodesdk"
   ],
   "author": {
     "name": "Shayan Abedi",
@@ -42,9 +38,12 @@
     "url": "https://github.com/passiv/snaptrade-node-sdk/issues"
   },
   "devDependencies": {
+    "@parcel/packager-ts": "^2.7.0",
+    "@parcel/transformer-typescript-types": "^2.7.0",
     "@types/node": "17.0.21",
-    "typescript": "^4.5.4",
-    "vite": "^2.8.0"
+    "@types/node-rsa": "^1.1.1",
+    "parcel": "^2.7.0",
+    "typescript": "^4.5.4"
   },
   "dependencies": {
     "axios": "^0.25.0",

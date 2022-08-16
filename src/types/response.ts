@@ -13,7 +13,7 @@ import {
   SymbolType,
   TradeType,
   UniversalSymbolType,
-} from './general-types';
+} from './general';
 
 export interface ResponseType {
   meta: { status: number; statusText: string };

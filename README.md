@@ -3,15 +3,14 @@
 <div align="center">
   <img src="https://bookface-images.s3.amazonaws.com/logos/90412fbc5679b873ae4756218a6fb86d0f4c99c2.png" alt="snaptrade">
 </div>
-<h1 align="center">@snaptrade/js-fetch-api</h1>
-<h3 align="center">A SnapTrade NodeJS sdk to help you make requests to the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a> endpoints more easily.</h3>
+<h1 align="center">snaptrade-node</h1>
+<br>
+<h2 align="center">The official NodeJS library for the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a> API.</h2>
 <br>
 <p>Contact us to schedule a demo and get a consumer key: <a href="mailto:api@snaptrade.com">api@snaptrade.com</a></p>
 <br>
 
-## [![NPM Version](https://img.shields.io/npm/v/@snaptrade/js-fetch-api.svg?style=flat-square)](https://www.npmjs.com/package/@snaptrade/js-fetch-api)
-
-## [![NPM Downloads](https://img.shields.io/npm/dm/@snaptrade/js-fetch-api.svg?style=flat-square)](https://www.npmjs.com/package/@snaptrade/js-fetch-api)
+## [![NPM Version](https://img.shields.io/npm/v/snaptrade-node.svg?style=flat-square)](https://www.npmjs.com/package/snaptrade-node) [![NPM Downloads](https://img.shields.io/npm/dm/snaptrade-node.svg?style=flat-square)](https://www.npmjs.com/package/snaptrade-node)
 
 ## 📖 Table of Contents
 
@@ -36,15 +35,15 @@
 ## 🚀 Getting Started
 
 ```shell
-npm i @snaptrade/js-fetch-api
+npm install snaptrade-node
 ```
 
 **Note** : Your consumerKey should always remain a secret! Never hard code it!
 
 ```typescript
-const SnapTrade = require("@snaptrade/js-fetch-api");
+import { SnapTradeFetch } from 'snaptrade-node';
 
-const const snapTrade = new SnapTrade(
+const const snapTrade = new SnapTradeFetch(
   "CLIENT_ID",
   "CONSUMER_KEY"
 );
