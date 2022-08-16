@@ -1,5 +1,5 @@
-const axios = require('axios');
-const crypto = require('crypto');
+import axios from 'axios';
+import * as crypto from 'crypto';
 
 const baseAPI = 'https://api.passiv.com';
 

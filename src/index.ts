@@ -1,4 +1,5 @@
-import { DefaultQueryParams, OrderImpactBodyParams } from './option-types';
+import { request } from './request';
+import { DefaultQueryParams, OrderImpactBodyParams } from './types/params';
 import {
   AccountPositionsResponseType,
   AccountResponseType,
@@ -24,18 +25,17 @@ import {
   UserHoldingsResponseType,
   RetrieveJWTResponseType,
   AccountHoldingsResponseType,
-} from './response-types';
-import { request } from './request';
+} from './types/response';
 
-const { privateDecrypt, constants, createDecipheriv } = require('crypto');
-const NodeRSA = require('node-rsa');
-const fs = require('fs');
+import { privateDecrypt, constants, createDecipheriv } from 'crypto';
+import * as fs from 'fs';
+import NodeRSA = require('node-rsa');
 
 /**
  * @class SnapTradeFetch
  */
 
-class SnapTradeFetch {
+export class SnapTradeFetch {
   clientId: string;
   consumerKey: string;
 
@@ -58,7 +58,7 @@ class SnapTradeFetch {
    */
   generateRSA(path: string): string {
     const key = new NodeRSA({ b: 4096 });
-    const publicKey = key.exportKey('openssh-public-pem');
+    const publicKey = key.exportKey('openssh-public');
     const privateKey = key.exportKey('pkcs8-private-pem');
 
     try {
@@ -81,7 +81,7 @@ class SnapTradeFetch {
   ): string {
     try {
       const rawFile = fs.readFileSync(privateKeyFilePath);
-      const privateKey = JSON.parse(rawFile).privateKey;
+      const privateKey = JSON.parse(rawFile.toString()).privateKey;
       if (privateKey) {
         const buffer = Buffer.from(encryptedSharedKey, 'base64');
         const decryptedKey = privateDecrypt(
@@ -91,7 +91,7 @@ class SnapTradeFetch {
           },
           buffer
         );
-        return decryptedKey;
+        return decryptedKey.toString();
       } else {
         throw 'Cannot find the private key. Please check the path provided and make sure the JSON file with a privateKey exists.';
       }
@@ -119,11 +119,13 @@ class SnapTradeFetch {
     let encryptedText = Buffer.from(
       encryptedMessageData.encryptedMessage
     ).toString('base64');
+    // @ts-ignore
     let decipher = createDecipheriv('aes-256-ocb', Buffer.from(sharedKey), iv, {
       authTagLength: 32,
     });
+    // @ts-ignore
     let decrypted = decipher.update(encryptedText);
-
+    // @ts-ignore
     decrypted = Buffer.concat([decrypted, decipher.final()]);
 
     return decrypted.toString();
@@ -845,5 +847,3 @@ class SnapTradeFetch {
     return response as Promise<TransactionHistoryResponseType[]>;
   }
 }
-
-module.exports = SnapTradeFetch;
