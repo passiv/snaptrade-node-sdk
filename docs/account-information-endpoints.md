@@ -7,21 +7,23 @@ List all accounts for the user, plus balances and positions for each account.
 ##### Signature:
 
 ```typescript
-fetchUserHoldings({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<UserHoldingsResponseType>
-
+fetchUserHoldings(
+    { userId, userSecret }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<UserHoldingsResponseType[]>
 ```
 
 ##### Example:
 
 ```typescript
 const userHoldings = async () => {
-  const holdings = await snapTrade.fetchUserHoldings({
-    userId: 'USER_ID',
-    userSecret: 'USER_SECRET',
-  });
+  const holdings = await snapTrade.fetchUserHoldings(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    { timeout: 65000 } // default timeout is 60000
+  );
   return holdings;
 };
 ```
@@ -34,9 +36,10 @@ Get a specific account for the user, plus balances and positions for that accoun
 
 ```typescript
 fetchAccountHoldings(
-    { userId, userSecret }: DefaultQueryParams,
-    accountId: string
-  ): Promise<AccountHoldingsResponseType>
+  { userId, userSecret }: DefaultQueryParams,
+  accountId: string,
+  options?: RequestOptionsType
+): Promise<AccountHoldingsResponseType>
 ```
 
 ##### Example:
@@ -48,7 +51,8 @@ const accountHoldings = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId'
+    'ACCOUNT_ID',
+    { timeout: 65000 }
   );
   return holdings;
 };
@@ -64,17 +68,22 @@ List all investment accounts for the user.
 fetchUserAccounts({
     userId,
     userSecret,
-  }: DefaultQueryParams): Promise<AccountType[]>
+  }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<AccountType[]>
 ```
 
 ##### Example:
 
 ```typescript
 const userAccounts = async () => {
-  const accounts = await snapTrade.fetchUserAccounts({
-    userId: 'USER_ID',
-    userSecret: 'USER_SECRET',
-  });
+  const accounts = await snapTrade.fetchUserAccounts(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    { timeout: 65000 }
+  );
   return accounts;
 };
 ```
@@ -88,7 +97,7 @@ Return details of a specific investment account.
 ```typescript
 fetchAccount(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string,  options?: RequestOptionsType
   ): Promise<AccountType>
 ```
 
@@ -101,7 +110,8 @@ const userAccount = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId'
+    'ACCOUNT_ID',
+    { timeout: 65000 }
   );
   return account;
 };
@@ -116,7 +126,7 @@ Get all cash balances of an investment account
 ```typescript
 fetchAccountBalances(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string, options?: RequestOptionsType
   ): Promise<BalanceType[]>
 ```
 
@@ -129,7 +139,8 @@ const accountBalances = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId'
+    'ACCOUNT_ID',
+    { timeout: 65000 }
   );
   return accBalances;
 };
@@ -144,7 +155,7 @@ Get all positions of an investment account
 ```typescript
 fetchAccountPositions(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string, options?: RequestOptionsType
   ): Promise<AccountPositionsResponseType>
 ```
 
@@ -157,7 +168,8 @@ const accountPositions = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId'
+    'ACCOUNT_ID',
+    { timeout: 65000 }
   );
   return accPositions;
 };

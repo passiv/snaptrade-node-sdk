@@ -10,17 +10,20 @@ List all brokerage authorizations for the user
 fetchBrokerageAuthorizations({
     userId,
     userSecret,
-  }: DefaultQueryParams): Promise<BrokerageAuthResponseType[]>
+  }: DefaultQueryParams,  options?: RequestOptionsType): Promise<BrokerageAuthResponseType[]>
 ```
 
 ##### Example:
 
 ```typescript
 const authorizations = async () => {
-  const authorizedBrokerages = await snapTrade.fetchBrokerageAuthorizations({
-    userId: "USER_ID",
-    userSecret: "USER_SECRET",
-  });
+  const authorizedBrokerages = await snapTrade.fetchBrokerageAuthorizations(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    { timeout: 65000 } // default timeout is 60000
+  );
   return authorizedBrokerages;
 };
 ```
@@ -34,7 +37,7 @@ Get detail of a specific brokerage authorizations for the user
 ```typescript
 fetchAuthorization(
     { userId, userSecret }: DefaultQueryParams,
-    authorizationId: string
+    authorizationId: string,  options?: RequestOptionsType
   ): Promise<BrokerageAuthResponseType>
 ```
 
@@ -44,10 +47,11 @@ fetchAuthorization(
 const brokerage = async () => {
   const authorizedBrokerage = await snapTrade.fetchAuthorization(
     {
-      userId: "USER_ID",
-      userSecret: "USER_SECRET",
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
     },
-    "authorizationId"
+    'AUTHORIZATION_ID',
+    { timeout: 65000 }
   );
   return authorizedBrokerage;
 };
@@ -61,9 +65,9 @@ Remove a brokerage authorization.
 
 ```typescript
 deleteAuthorization(
-    { userId, userSecret }: DefaultQueryParams,
-    authorizationId: string
-  ): Promise<BrokerageAuthResponseType>
+  { userId, userSecret }: DefaultQueryParams,
+  authorizationId: string, options?: RequestOptionsType
+): Promise<BrokerageAuthResponseType>
 ```
 
 ##### Example:
@@ -75,7 +79,8 @@ const delete= async () => {
       userId: "USER_ID",
       userSecret: "USER_SECRET",
     },
-    "authorizationId"
+    "AUTHORIZATION_ID",
+    { timeout: 65000 }
   );
   return deletedAuthorization;
 };

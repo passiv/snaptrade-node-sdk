@@ -1,3 +1,6 @@
+export interface RequestOptionsType {
+  timeout?: number;
+}
 export interface CurrencyType {
   id: string;
   code: string;

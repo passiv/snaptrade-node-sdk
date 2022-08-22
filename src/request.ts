@@ -40,13 +40,10 @@ const signRequest = (req: any, endpoint: string, consumerK: string) => {
   return req;
 };
 
-/**
- * @param required
- */
-
 export const request = async (options: {
   endpoint: string;
   method: 'get' | 'post' | 'put' | 'delete';
+  timeout?: number;
   consumerKey: string;
   defaultQueryParams: {
     clientId: string;
@@ -59,6 +56,7 @@ export const request = async (options: {
   const {
     endpoint,
     method,
+    timeout = 60000,
     consumerKey,
     defaultQueryParams,
     extraParams,
@@ -82,7 +80,7 @@ export const request = async (options: {
 
   const axiosInstance = axios.create({
     baseURL: baseAPI,
-    timeout: 30000,
+    timeout,
     params: params,
     data: data,
   });

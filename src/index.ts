@@ -1,4 +1,5 @@
 import { request } from './request';
+import { RequestOptionsType } from './types/general';
 import { DefaultQueryParams, OrderImpactBodyParams } from './types/params';
 import {
   AccountPositionsResponseType,
@@ -237,15 +238,17 @@ export class SnapTradeFetch {
   /**
    * List all accounts for the user, plus balances and positions for each account.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param {RequestOptionsType} [options]
    * @returns Promise<UserHoldingsResponseType[]>
    */
-  async fetchUserHoldings({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<UserHoldingsResponseType[]> {
+  async fetchUserHoldings(
+    { userId, userSecret }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<UserHoldingsResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/holdings',
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -260,15 +263,18 @@ export class SnapTradeFetch {
    * Get a specific account for the user, plus balances and positions for that account.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param accountId: string
+   * @param {RequestOptionsType} [options]
    * @returns Promise<AccountHoldingsResponseType>
    */
   async fetchAccountHoldings(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string,
+    options?: RequestOptionsType
   ): Promise<AccountHoldingsResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/holdings`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -282,15 +288,17 @@ export class SnapTradeFetch {
   /**
    * List all investment accounts for the user.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param {RequestOptionsType} [options]
    * @returns Promise<AccountResponseType[]>
    */
-  async fetchUserAccounts({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<AccountResponseType[]> {
+  async fetchUserAccounts(
+    { userId, userSecret }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<AccountResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/accounts',
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -305,15 +313,18 @@ export class SnapTradeFetch {
    * Return details of a specific investment account.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} accountId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<AccountResponseType>
    */
   async fetchAccount(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string,
+    options?: RequestOptionsType
   ): Promise<AccountResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -327,17 +338,20 @@ export class SnapTradeFetch {
   /**
    * Get all cash balances of an investment account.
    * @param {DefaultQueryParams} defaultQueryParams
-   * @param {string} accountId
+   * @param {string} accountId\
+   * @param {RequestOptionsType} [options]
    * @returns Promise<BalanceResponseType>
   
    */
   async fetchAccountBalances(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string,
+    options?: RequestOptionsType
   ): Promise<BalanceResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/balances`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -352,15 +366,18 @@ export class SnapTradeFetch {
    * Get all positions of an investment account.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} accountId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<AccountPositionsResponseType>
    */
   async fetchAccountPositions(
     { userId, userSecret }: DefaultQueryParams,
-    accountId: string
+    accountId: string,
+    options?: RequestOptionsType
   ): Promise<AccountPositionsResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/positions`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -378,16 +395,19 @@ export class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} accountId
    * @param { status: string; days: number } extraParams
+   * @param {RequestOptionsType} [options]
    * @returns Promise<OrdersResponseType[]>
    */
   async fetchOrdersHistory(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams?: { status?: string; days?: number }
+    extraParams?: { status?: string; days?: number },
+    options?: RequestOptionsType
   ): Promise<OrderResponseType[]> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -404,16 +424,19 @@ export class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} accountId
    * @param {brokerage_order_id: string} data
+   * @param {RequestOptionsType} [options]
    * @returns Promise<OrderResponseType>
    */
   async cancelOpenOrder(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    data: { brokerage_order_id: string }
+    data: { brokerage_order_id: string },
+    options?: RequestOptionsType
   ): Promise<OrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders/cancel`,
       method: 'post',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -429,16 +452,19 @@ export class SnapTradeFetch {
    * Get symbols quote.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} accountId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<SymbolsQuoteResponseType>
    */
   async fetchSymbolsQuote(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { symbols: string; use_ticker?: boolean }
+    extraParams: { symbols: string; use_ticker?: boolean },
+    options?: RequestOptionsType
   ): Promise<SymbolsQuoteResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/quotes`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -455,16 +481,19 @@ export class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} portfolioGroupId
    * @param {string} calculatedTradeId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<>
    */
   async multipleTradesOrderImpact(
     { userId, userSecret }: DefaultQueryParams,
     portfolioGroupId: string,
-    calculatedTradeId: string
+    calculatedTradeId: string,
+    options?: RequestOptionsType
   ): Promise<MultipleTradesOrderImpactResponseType[]> {
     const response = await request({
       endpoint: `/api/v1/portfolioGroups/${portfolioGroupId}/calculatedtrades/${calculatedTradeId}`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -479,15 +508,18 @@ export class SnapTradeFetch {
    * Check impact of trades on account.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {OrderImpactBodyParams} data
+   * @param {RequestOptionsType} [options]
    * @returns Promise<OrderImpactResponseType>
    */
   async orderImpact(
     { userId, userSecret }: DefaultQueryParams,
-    data: OrderImpactBodyParams
+    data: OrderImpactBodyParams,
+    options?: RequestOptionsType
   ): Promise<OrderImpactResponseType> {
     const response = await request({
       endpoint: '/api/v1/trade/impact',
       method: 'post',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -503,15 +535,18 @@ export class SnapTradeFetch {
    * Place order.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} tradeId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<OrderResponseType>
    */
   async placeOrder(
     { userId, userSecret }: DefaultQueryParams,
-    tradeId: string
+    tradeId: string,
+    options?: RequestOptionsType
   ): Promise<OrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/trade/${tradeId}`,
       method: 'post',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -527,15 +562,17 @@ export class SnapTradeFetch {
   /**
    * List all brokerage authorizations for the user.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param {RequestOptionsType} [options]
    * @returns Promise<BrokerageAuthResponseType[]>
    */
-  async fetchBrokerageAuthorizations({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<BrokerageAuthResponseType[]> {
+  async fetchBrokerageAuthorizations(
+    { userId, userSecret }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<BrokerageAuthResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/authorizations',
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -550,15 +587,18 @@ export class SnapTradeFetch {
    * Get detail of a specific brokerage authorizations for the user.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} authorizationId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<BrokerageAuthResponseType>
    */
   async fetchAuthorization(
     { userId, userSecret }: DefaultQueryParams,
-    authorizationId: string
+    authorizationId: string,
+    options?: RequestOptionsType
   ): Promise<BrokerageAuthResponseType> {
     const response = await request({
       endpoint: `/api/v1/authorizations/${authorizationId}`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -573,15 +613,18 @@ export class SnapTradeFetch {
    * Remove a brokerage authorization.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} authorizationId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<BrokerageAuthResponseType>
    */
   async deleteAuthorization(
     { userId, userSecret }: DefaultQueryParams,
-    authorizationId: string
+    authorizationId: string,
+    options?: RequestOptionsType
   ): Promise<BrokerageAuthResponseType> {
     const response = await request({
       endpoint: `/api/v1/authorizations/${authorizationId}`,
       method: 'delete',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -779,15 +822,17 @@ export class SnapTradeFetch {
   /**
    * List of all portfolio groups.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param {RequestOptionsType} [options]
    * @returns Promise<PortfolioGroupResponseType>
    */
-  async fetchPortfolioGroups({
-    userId,
-    userSecret,
-  }: DefaultQueryParams): Promise<PortfolioGroupResponseType> {
+  async fetchPortfolioGroups(
+    { userId, userSecret }: DefaultQueryParams,
+    options?: RequestOptionsType
+  ): Promise<PortfolioGroupResponseType> {
     const response = await request({
       endpoint: '/api/v1/portfolioGroups',
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -802,15 +847,18 @@ export class SnapTradeFetch {
    * List Portfolio Group positions.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param portfolioGroupId
+   * @param {RequestOptionsType} [options]
    * @returns Promise<PortfolioGroupPositionsResponseType>
    */
   async fetchPortfolioGroupPrositions(
     { userId, userSecret }: DefaultQueryParams,
-    portfolioGroupId: string
+    portfolioGroupId: string,
+    options?: RequestOptionsType
   ): Promise<PortfolioGroupPositionsResponseType> {
     const response = await request({
       endpoint: `/api/v1/portfolioGroups/${portfolioGroupId}/positions`,
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,
@@ -831,11 +879,13 @@ export class SnapTradeFetch {
    */
   async fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
-    extraParams?: { startDate?: string; endDate?: string; accounts?: string }
+    extraParams?: { startDate?: string; endDate?: string; accounts?: string },
+    options?: RequestOptionsType
   ): Promise<TransactionHistoryResponseType[]> {
     const response = await request({
       endpoint: '/api/v1/activities',
       method: 'get',
+      timeout: options?.timeout,
       consumerKey: this.consumerKey,
       defaultQueryParams: {
         clientId: this.clientId,

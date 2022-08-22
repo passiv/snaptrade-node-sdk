@@ -10,7 +10,8 @@ Get all history of orders placed in account
 fetchOrdersHistory(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { status: string; days: number }
+    extraParams: { status: string; days: number },
+    options?: RequestOptionsType
   ): Promise<OrderResponseType[]>
 ```
 
@@ -23,11 +24,12 @@ const ordersHistory = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId',
+    'ACCOUNT_ID',
     {
       status: 'all' | 'open' | 'executed', // defaults to all if not passed in
       days: 90, // defaults to 90 if not passed in
-    }
+    },
+    { timeout: 65000 } // default timeout is 60000
   );
   return orders;
 };
@@ -43,7 +45,8 @@ Get symbol quotes
 fetchSymbolsQuote(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    extraParams: { symbols: string; use_ticker: boolean }
+    extraParams: { symbols: string; use_ticker: boolean },
+    options?: RequestOptionsType
   ): Promise<SymbolsQuoteResponseType>
 ```
 
@@ -56,11 +59,12 @@ const symbolQuotes = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId',
+    'ACCOUNT_ID',
     {
       symbols: 'TSLA', // universal_symbol_id or ticker to get quotes for.
       use_ticker: true, // should be set to true if providing tickers.
-    }
+    },
+    { timeout: 65000 }
   );
   return quotes;
 };
@@ -76,7 +80,8 @@ Cancel open order in account
 cancelOpenOrder(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
-    data: { brokerage_order_id: string }
+    data: { brokerage_order_id: string },
+    options?: RequestOptionsType
   ): Promise<OrderResponseType>
 ```
 
@@ -89,10 +94,11 @@ const cancelOrder = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'accountId',
+    'ACCOUNT_ID',
     {
-      brokerage_order_id: 'BROKERORDERID',
-    }
+      brokerage_order_id: 'BROKER_ORDER_ID',
+    },
+    { timeout: 65000 }
   );
   return cancel;
 };
@@ -106,9 +112,10 @@ Check impact of trades on account
 
 ```typescript
 orderImpact(
-    { userId, userSecret }: DefaultQueryParams,
-    data: OrderImpactBodyParams
-  ): Promise<OrderImpactResponseType>
+  { userId, userSecret }: DefaultQueryParams,
+  data: OrderImpactBodyParams,
+  options?: RequestOptionsType
+): Promise<OrderImpactResponseType>
 ```
 
 ##### Example:
@@ -121,14 +128,15 @@ const orderImpact = async () => {
       userSecret: 'USER_SECRET',
     },
     {
-      account_id: 'id',
+      account_id: 'ACCOUNT_ID',
       action: 'BUY' | 'SELL',
       order_type: 'Limit' | 'Market',
       price: 10,
       time_in_force: 'Day',
       units: 1,
-      universal_symbol_id: 'symbolid',
-    }
+      universal_symbol_id: 'SYMBOL_ID',
+    },
+    { timeout: 65000 }
   );
   return impact;
 };
@@ -142,9 +150,10 @@ Place order
 
 ```typescript
 placeOrder(
-    { userId, userSecret }: DefaultQueryParams,
-    tradeId: string
-  ): Promise<OrderResponseType>
+  { userId, userSecret }: DefaultQueryParams,
+  tradeId: string,
+  options?: RequestOptionsType
+): Promise<OrderResponseType>
 ```
 
 ##### Example:
@@ -156,7 +165,8 @@ const placeOrder = async () => {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
     },
-    'tradeId'
+    'TRADE_ID',
+    { timeout: 65000 }
   );
   return placedOrder;
 };

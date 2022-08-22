@@ -8,7 +8,8 @@ Get transaction history for a user
 
 ```typescript
 fetchTransactionHistory(
-    { userId, userSecret }: DefaultQueryParams,
+  { timeout }: RequestOptionsType,
+  { userId, userSecret }: DefaultQueryParams,
     extraParams: { startDate: string; endDate: string, accounts: string }
   ): Promise<TransactionHistoryResponseType[]>
 ```
@@ -18,6 +19,7 @@ fetchTransactionHistory(
 ```typescript
 const getTransactionHistory = async () => {
   const transactionHistory = await snapTrade.fetchTransactionHistory(
+    { timeout: 65000 }, // default timeout is 60000
     {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
