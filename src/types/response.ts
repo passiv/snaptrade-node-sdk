@@ -97,8 +97,11 @@ export interface BalanceResponseType extends ResponseType {
 export interface AccountPositionsResponseType extends ResponseType {
   data: {
     symbol: SymbolType;
-    units: number;
     price: number;
+    open_pnl: number | null;
+    fractional_units: number | null;
+    units: number;
+    average_purchase_price: number;
   }[];
 }
 
