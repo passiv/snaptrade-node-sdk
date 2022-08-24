@@ -90,6 +90,10 @@ export interface AccountResponseType extends ResponseType {
   data: AccountType;
 }
 
+export interface AccountsResponseType extends ResponseType {
+  data: AccountType[];
+}
+
 export interface BalanceResponseType extends ResponseType {
   data: BalanceType[];
 }
@@ -97,8 +101,11 @@ export interface BalanceResponseType extends ResponseType {
 export interface AccountPositionsResponseType extends ResponseType {
   data: {
     symbol: SymbolType;
-    units: number;
     price: number;
+    open_pnl: number | null;
+    fractional_units: number | null;
+    units: number;
+    average_purchase_price: number;
   }[];
 }
 

@@ -8,9 +8,13 @@ export interface CurrencyType {
 }
 export interface AccountType {
   id: string;
-  brokerage: string;
-  number: string;
+  brokerage_authorization: string;
+  portfolio_group: string;
   name: string;
+  number: string;
+  institution_name: string;
+  cash_restrictions: CashRestrictionType[];
+  created_date: string;
 }
 
 export interface BalanceType {
