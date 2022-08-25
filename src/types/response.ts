@@ -90,6 +90,10 @@ export interface AccountResponseType extends ResponseType {
   data: AccountType;
 }
 
+export interface AccountsResponseType extends ResponseType {
+  data: AccountType[];
+}
+
 export interface BalanceResponseType extends ResponseType {
   data: BalanceType[];
 }

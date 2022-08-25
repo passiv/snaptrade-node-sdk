@@ -4,6 +4,7 @@ import { DefaultQueryParams, OrderImpactBodyParams } from './types/params';
 import {
   AccountPositionsResponseType,
   AccountResponseType,
+  AccountsResponseType,
   BalanceResponseType,
   BrokerageAuthorizationTypeObjectResponseType,
   BrokerageAuthResponseType,
@@ -294,7 +295,7 @@ export class SnapTradeFetch {
   async fetchUserAccounts(
     { userId, userSecret }: DefaultQueryParams,
     options?: RequestOptionsType
-  ): Promise<AccountResponseType[]> {
+  ): Promise<AccountsResponseType> {
     const response = await request({
       endpoint: '/api/v1/accounts',
       method: 'get',
@@ -306,7 +307,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<AccountResponseType[]>;
+    return response as Promise<AccountsResponseType>;
   }
 
   /**
