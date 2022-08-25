@@ -100,7 +100,9 @@ export interface BalanceResponseType extends ResponseType {
 
 export interface AccountPositionsResponseType extends ResponseType {
   data: {
-    symbol: SymbolType;
+    symbol: {
+        symbol: SymbolType,
+    }
     price: number;
     open_pnl: number | null;
     fractional_units: number | null;
