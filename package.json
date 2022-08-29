@@ -1,6 +1,6 @@
 {
   "name": "snaptrade-node",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The official NodeJS library for the SnapTrade API.",
   "source": "src/index.ts",
   "main": "dist/main.js",
@@ -10,8 +10,8 @@
     "dist"
   ],
   "scripts": {
-    "watch": "tsc && parcel watch",
-    "build": "tsc && parcel build",
+    "watch": "tsc && parcel watch --no-cache",
+    "build": "tsc && parcel build --no-cache",
     "prepare": "npm run build",
     "version": "git add -A src",
     "postversion": "git push && git push --tags"
