@@ -25,6 +25,7 @@ export interface BalanceType {
 export interface SymbolType {
   symbol: string;
   name: string;
+  description: string;
   currency: CurrencyType;
   exchange: {
     code: string;
