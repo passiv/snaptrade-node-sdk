@@ -79,7 +79,7 @@ export interface BrokerageType {
   url: string;
   open_url: string;
   description: string;
-  slug: stirng;
+  slug: string;
   aws_s3_logo_url: string;
   aws_s3_square_logo_url: string;
   maintenance_mode: boolean;

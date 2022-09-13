@@ -156,7 +156,7 @@ export interface SecurityTypeResponseType extends ResponseType {
 }
 
 export interface BrokerageResponseType extends ResponseType {
-  data: BrokerageType;
+  data: BrokerageType[];
 }
 
 export interface BrokerageAuthResponseType extends ResponseType {
