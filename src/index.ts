@@ -640,9 +640,9 @@ export class SnapTradeFetch {
 
   /**
    * List of all supported brokerages.
-   * @returns Promise<BrokerageResponseType[]>
+   * @returns Promise<BrokerageResponseType>
    */
-  async fetchBrokerages(): Promise<BrokerageResponseType[]> {
+  async fetchBrokerages(): Promise<BrokerageResponseType> {
     const response = await request({
       endpoint: '/api/v1/brokerages',
       method: 'get',
@@ -651,7 +651,7 @@ export class SnapTradeFetch {
         clientId: this.clientId,
       },
     });
-    return response as Promise<BrokerageResponseType[]>;
+    return response as Promise<BrokerageResponseType>;
   }
 
   /**

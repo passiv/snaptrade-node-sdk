@@ -75,7 +75,15 @@ export interface CashRestrictionType {
 export interface BrokerageType {
   id: string;
   name: string;
+  display_name: string;
   url: string;
+  open_url: string;
+  description: string;
+  slug: string;
+  aws_s3_logo_url: string;
+  aws_s3_square_logo_url: string;
+  maintenance_mode: boolean;
+  is_real_time_connection: boolean;
   authorized_types: {
     type: string;
   }[];
