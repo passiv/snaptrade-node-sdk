@@ -1,6 +1,6 @@
 {
   "name": "snaptrade-node",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "The official NodeJS library for the SnapTrade API.",
   "source": "src/index.ts",
   "main": "dist/main.js",
