@@ -57,7 +57,7 @@ export interface TradeType {
   id: string;
   account: AccountType;
   order_type: string;
-  time_in_force: 'FOK' | 'Day';
+  time_in_force: "FOK" | "Day";
   symbol: ManualTradeSymbolType;
   action: string;
   units: number;
@@ -68,7 +68,7 @@ export interface CashRestrictionType {
   id: string;
   account: string;
   currency: string;
-  type: 'ALLOCATE_MAX' | 'RETAIN_MIN';
+  type: "ALLOCATE_MAX" | "RETAIN_MIN";
   amount: number;
 }
 
@@ -126,7 +126,7 @@ export interface OrderType {
   limit_price: number;
   stop_price: number;
   order_type: string;
-  time_in_force: 'FOK' | 'Day';
+  time_in_force: "FOK" | "Day";
   time_placed: string;
   time_updated: string;
   expiry_date: string;
@@ -145,4 +145,76 @@ export interface OptionPosition {
   };
   price: number;
   currency: CurrencyType;
+}
+
+export interface Timeframe {
+  date: string;
+  value: number;
+  currency: string;
+}
+
+export interface Contribution {
+  contributions: number;
+  date: string;
+  currency: string;
+}
+
+export interface ReturnRateTimeframe {
+  periodStart: string;
+  periodEnd: string;
+  rateOfReturn: number;
+}
+
+export interface DividendsSymbolCurrency {
+  id: string;
+  code: string;
+  name: string;
+  include_in_rate_data: boolean;
+}
+
+export interface DividendsSymbolExchange {
+  id: string;
+  mic_code: string;
+  code: string;
+  name: string;
+  timezone: string;
+  start_time: string;
+  close_time: string;
+  suffix: null;
+  allows_cryptocurrency_symbols: boolean;
+}
+
+export interface DividendsSymbolType {
+  id: string;
+  code: string;
+  is_supported: boolean;
+  description: string;
+}
+
+export interface DividendsSymbol {
+  id: string;
+  symbol: string;
+  description: string;
+  currency: DividendsSymbolCurrency;
+  exchange: DividendsSymbolExchange;
+  currencies: any[];
+  type: DividendsSymbolType;
+  raw_symbol: string;
+}
+
+export interface Dividends {
+  symbol: DividendsSymbol;
+  amount: number;
+  currency: string;
+}
+
+export interface DividendsTimelineInfo {
+  symbol: string;
+  amount: number;
+  currency: string;
+}
+
+export interface DividendsTimeline {
+  date: string;
+  dividends: DividendsTimelineInfo[];
 }

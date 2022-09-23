@@ -1,6 +1,10 @@
 import { request } from './request';
 import { RequestOptionsType } from './types/general';
-import { DefaultQueryParams, OrderImpactBodyParams } from './types/params';
+import {
+  DefaultQueryParams,
+  OrderImpactBodyParams,
+  PerformanceInformationQueryParams,
+} from './types/params';
 import {
   AccountPositionsResponseType,
   AccountResponseType,
@@ -27,6 +31,7 @@ import {
   UserHoldingsResponseType,
   RetrieveJWTResponseType,
   AccountHoldingsResponseType,
+  PerformanceInformationResponseType,
 } from './types/response';
 
 import { privateDecrypt, constants, createDecipheriv } from 'crypto';
@@ -896,5 +901,31 @@ export class SnapTradeFetch {
       extraParams,
     });
     return response as Promise<TransactionHistoryResponseType[]>;
+  }
+
+  /**
+   * Get performance information for a specific timeframe
+   * @param {DefaultQueryParams} defaultQueryParams
+   * @param {PerformanceInformationQueryParams} extraParams
+   * @returns Promise<PerformanceInformationResponseType[]>
+   */
+  async fetchPerformanceInformation(
+    { userId, userSecret }: DefaultQueryParams,
+    extraParams: PerformanceInformationQueryParams,
+    options?: RequestOptionsType
+  ): Promise<PerformanceInformationResponseType[]> {
+    const response = await request({
+      endpoint: '/api/v1/performance/custom',
+      method: 'get',
+      timeout: options?.timeout,
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+        userSecret,
+        userId,
+      },
+      extraParams,
+    });
+    return response as Promise<PerformanceInformationResponseType[]>;
   }
 }
