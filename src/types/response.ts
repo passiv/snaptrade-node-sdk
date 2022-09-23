@@ -2,7 +2,10 @@ import {
   AccountType,
   BalanceType,
   BrokerageType,
+  Contribution,
   CurrencyType,
+  Dividends,
+  DividendsTimeline,
   InvestmentAccountType,
   ManualTradeSymbolType,
   OptionPosition,
@@ -10,7 +13,9 @@ import {
   PortfolioGroupPositionType,
   PortfolioGroupType,
   PositionType,
+  ReturnRateTimeframe,
   SymbolType,
+  Timeframe,
   TradeType,
   UniversalSymbolType,
 } from './general';
@@ -101,8 +106,8 @@ export interface BalanceResponseType extends ResponseType {
 export interface AccountPositionsResponseType extends ResponseType {
   data: {
     symbol: {
-        symbol: SymbolType,
-    }
+      symbol: SymbolType;
+    };
     price: number;
     open_pnl: number | null;
     fractional_units: number | null;
@@ -196,6 +201,31 @@ export interface TransactionHistoryResponseType extends ResponseType {
     trade_date: string;
     type: string;
     units: number;
+  };
+}
+
+export interface PerformanceInformationResponseType extends ResponseType {
+  data: {
+    totalEquityTimeframe: Timeframe[];
+    contributions: Contribution;
+    contributionTimeframe: Timeframe[];
+    contributionTimeframeCumulative: Timeframe[];
+    withdrawalTimeframe: Timeframe[];
+    contributionStreak: number;
+    contributionMonthsContributed: number;
+    contributionTotalMonths: number;
+    dividendIncome: number;
+    monthlyDividends: number;
+    dividends: Dividends[];
+    badTickers: any[];
+    dividendTimeline: DividendsTimeline[];
+    commissions: number;
+    forexFees: number;
+    fees: number;
+    feeSavings: number;
+    rateOfReturn: number;
+    returnRateTimeframe: ReturnRateTimeframe[];
+    detailedMode: boolean;
   };
 }
 

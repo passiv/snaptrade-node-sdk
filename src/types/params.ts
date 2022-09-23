@@ -12,3 +12,11 @@ export interface OrderImpactBodyParams {
   units: number;
   universal_symbol_id: string;
 }
+
+export interface PerformanceInformationQueryParams {
+  startDate: string;
+  endDate: string;
+  accounts?: string;
+  frequency?: "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
+  detailed?: boolean;
+}
