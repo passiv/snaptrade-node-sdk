@@ -193,3 +193,22 @@ const getStockExchangesAndSuffixes = async () => {
   return listOfStockExchangesAndSuffixes;
 };
 ```
+
+### _partner data_
+
+Get data relevant to the partner
+
+##### Signature:
+
+```typescript
+partnerData(): Promise<PartnerDataResponseType>
+```
+
+##### Example:
+
+```typescript
+const getPartnerData = async () => {
+  const partnerData = await snapTrade.partnerData();
+  return partnerData;
+};
+```

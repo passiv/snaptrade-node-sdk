@@ -57,7 +57,7 @@ export interface TradeType {
   id: string;
   account: AccountType;
   order_type: string;
-  time_in_force: "FOK" | "Day";
+  time_in_force: 'FOK' | 'Day';
   symbol: ManualTradeSymbolType;
   action: string;
   units: number;
@@ -68,7 +68,7 @@ export interface CashRestrictionType {
   id: string;
   account: string;
   currency: string;
-  type: "ALLOCATE_MAX" | "RETAIN_MIN";
+  type: 'ALLOCATE_MAX' | 'RETAIN_MIN';
   amount: number;
 }
 
@@ -126,7 +126,7 @@ export interface OrderType {
   limit_price: number;
   stop_price: number;
   order_type: string;
-  time_in_force: "FOK" | "Day";
+  time_in_force: 'FOK' | 'Day';
   time_placed: string;
   time_updated: string;
   expiry_date: string;

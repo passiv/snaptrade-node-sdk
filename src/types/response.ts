@@ -253,6 +253,23 @@ export interface StockExchangeResponseType extends ResponseType {
   };
 }
 
+export interface PartnerDataResponseType extends ResponseType {
+  data: {
+    redirect_uri: string;
+    can_access_trades: boolean;
+    allowed_brokerages: BrokerageType[];
+    name: string;
+    slug: string;
+    logo_url: string;
+    pin_required: boolean;
+    can_access_holdings: boolean;
+    can_access_account_history: boolean;
+    can_access_reference_data: boolean;
+    can_access_portfolio_management: boolean;
+    can_access_orders: boolean;
+  };
+}
+
 export interface CurrencyResponseType extends ResponseType {
   data: CurrencyType[];
 }

@@ -32,6 +32,7 @@ import {
   RetrieveJWTResponseType,
   AccountHoldingsResponseType,
   PerformanceInformationResponseType,
+  PartnerDataResponseType,
 } from './types/response';
 
 import { privateDecrypt, constants, createDecipheriv } from 'crypto';
@@ -821,6 +822,22 @@ export class SnapTradeFetch {
       },
     });
     return response as Promise<StockExchangeResponseType[]>;
+  }
+
+  /**
+   * Get data relevant to the partner
+   * @returns Promise<PartnerDataResponseType>
+   */
+  async partnerData(): Promise<PartnerDataResponseType> {
+    const response = await request({
+      endpoint: `/api/v1/snapTrade/partners/`,
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+      },
+    });
+    return response as Promise<PartnerDataResponseType>;
   }
 
   /** Portfolio Management **/
