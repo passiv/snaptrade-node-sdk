@@ -91,7 +91,7 @@ Generate a redirect URI to securely login a user to the SnapTrade Connection Por
 generateRedirectURI({
     userId,
     userSecret,
-  }: DefaultQueryParams, data: {broker: string; immediateRedirect: boolean; customRedirect: string, reconnect: string}): Promise<RedirectURIResponseType>
+  }: DefaultQueryParams, data?: {broker: string; immediateRedirect: boolean; customRedirect: string, reconnect: string, connectionType: string}): Promise<RedirectURIResponseType>
 ```
 
 ##### Example:
@@ -107,7 +107,8 @@ const redirectURI = async () => {
       broker: 'ALPACA',
       immediateRedirect: true,
       customRedirect: 'https://passiv.com',
-      reconnect: 'b5f262d-4bb9-365d-888a-202bd3b15fa1',
+      reconnect: 'b5f262d-4bb9-365d-888a-202bd3b15fa1', // authorization id
+      connectionType: 'read', // 'read' or 'trade'
     }
   );
   return uri;

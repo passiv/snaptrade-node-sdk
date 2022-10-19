@@ -219,11 +219,12 @@ export class SnapTradeFetch {
 
   async generateRedirectURI(
     { userId, userSecret }: DefaultQueryParams,
-    data: {
+    data?: {
       broker?: string;
       immediateRedirect?: boolean;
       customRedirect?: string;
       reconnect?: string;
+      connectionType?: string;
     }
   ): Promise<RedirectURIResponseType> {
     const response = await request({
