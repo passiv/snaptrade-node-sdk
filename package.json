@@ -46,6 +46,8 @@
   },
   "dependencies": {
     "axios": "^0.25.0",
+    "encrypt-rsa": "^2.1.2",
+    "hybrid-crypto-js": "^0.2.4",
     "node-rsa": "^1.1.1"
   }
 }

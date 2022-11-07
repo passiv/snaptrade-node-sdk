@@ -35,9 +35,17 @@ import {
   PartnerDataResponseType,
 } from './types/response';
 
-import { privateDecrypt, constants, createDecipheriv } from 'crypto';
-import * as fs from 'fs';
+import {
+  privateDecrypt,
+  constants,
+  createDecipheriv,
+  randomBytes,
+} from 'crypto';
+//@ts-ignore
+import { Crypt, RSA, keyPair } from 'hybrid-crypto-js';
+import EncryptRsa from 'encrypt-rsa';
 import NodeRSA = require('node-rsa');
+const encryptRsa = new EncryptRsa();
 
 /**
  * @class SnapTradeFetch
@@ -64,48 +72,26 @@ export class SnapTradeFetch {
    * @param {string} path - path to store the private key
    * @returns string
    */
-  generateRSA(path: string): string {
-    const key = new NodeRSA({ b: 4096 });
+  generateRSAKey(): any {
+    const key = new NodeRSA({ b: 2048 });
     const publicKey = key.exportKey('openssh-public');
     const privateKey = key.exportKey('pkcs8-private-pem');
-
     try {
-      fs.writeFileSync(path, JSON.stringify({ privateKey }));
-      return publicKey;
+      return { publicKey, privateKey };
     } catch (err) {
       return JSON.stringify(err);
     }
-  }
-
-  /**
-   * Decrypt encrypted shared key
-   * @param {string} privateKeyFilePath - path to retrieve the private key
-   * @param {string} encryptedSharedKey - encrypted shared key
-   * @returns string
-   */
-  decryptSharedKey(
-    privateKeyFilePath: string,
-    encryptedSharedKey: string
-  ): string {
-    try {
-      const rawFile = fs.readFileSync(privateKeyFilePath);
-      const privateKey = JSON.parse(rawFile.toString()).privateKey;
-      if (privateKey) {
-        const buffer = Buffer.from(encryptedSharedKey, 'base64');
-        const decryptedKey = privateDecrypt(
-          {
-            key: privateKey.toString(),
-            padding: constants.RSA_PKCS1_OAEP_PADDING,
-          },
-          buffer
-        );
-        return decryptedKey.toString();
-      } else {
-        throw 'Cannot find the private key. Please check the path provided and make sure the JSON file with a privateKey exists.';
-      }
-    } catch (err) {
-      return JSON.stringify(err);
-    }
+    // const { privateKey, publicKey } = encryptRsa.createPrivateAndPublicKeys();
+    // return { privateKey, publicKey };
+    // var rsa = new RSA();
+    // return rsa.generateKeyPairAsync().then((keyPair: any) => {
+    //   const publicKey = keyPair.publicKey;
+    //   const privateKey = keyPair.privateKey;
+    //   return {
+    //     publicKey,
+    //     privateKey,
+    //   };
+    // }, 2048);
   }
 
   /**
@@ -114,29 +100,47 @@ export class SnapTradeFetch {
    * @param {encryptedMessage: string, tag: string, nonce: string} encryptedMessageData
    * @returns string
    */
-  decryptMessage(
-    sharedKey: string,
-    encryptedMessageData: {
-      encryptedMessage: string;
-      tag: string;
-      nonce: string;
-    }
-  ): string {
-    let iv = Buffer.from(encryptedMessageData.nonce).toString('base64');
-
-    let encryptedText = Buffer.from(
-      encryptedMessageData.encryptedMessage
-    ).toString('base64');
-    // @ts-ignore
-    let decipher = createDecipheriv('aes-256-ocb', Buffer.from(sharedKey), iv, {
-      authTagLength: 32,
+  decryptRSAMessage(encryptedMessage: any, privateKey: string): string {
+    const decryptedText = encryptRsa.decryptStringWithRsaPrivateKey({
+      text: encryptedMessage,
+      privateKey,
     });
-    // @ts-ignore
-    let decrypted = decipher.update(encryptedText);
-    // @ts-ignore
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decryptedText;
+  }
 
-    return decrypted.toString();
+  /**
+   * Decrypt encrypted shared key
+   * @param {string} privateKeyFilePath - path to retrieve the private key
+   * @param {string} encryptedSharedKey - encrypted shared key
+   * @returns string
+   */
+  decryptAESMessage(sharedKey: string, encryptedMessageData: any): any {
+    const nonce = encryptedMessageData.nonce;
+    const decryptedNonce = Buffer.from(nonce, 'base64');
+
+    const payload = encryptedMessageData.encryptedMessage;
+    // const decryptedPayload = Buffer.from(payload, 'base64');
+    const decryptedPayload = Buffer.from(payload, 'base64').toString('hex');
+    const tag = encryptedMessageData.tag;
+    const decryptedTag = Buffer.from(tag, 'base64');
+
+    // @ts-ignore
+    const decipher = createDecipheriv(
+      'aes-256-ocb',
+      sharedKey,
+      decryptedNonce,
+      {
+        authTagLength: 16,
+      }
+    );
+
+    decipher.setAuthTag(decryptedTag);
+
+    const decipherFinal = decipher.update(decryptedPayload, 'utf-8', 'base64');
+
+    // @ts-ignore
+    // console.log(Buffer.from(decipherFinal, 'utf-8').toString('base64'));
+    console.log(decipherFinal);
   }
 
   /** Authentication **/
