@@ -81,17 +81,6 @@ export class SnapTradeFetch {
     } catch (err) {
       return JSON.stringify(err);
     }
-    // const { privateKey, publicKey } = encryptRsa.createPrivateAndPublicKeys();
-    // return { privateKey, publicKey };
-    // var rsa = new RSA();
-    // return rsa.generateKeyPairAsync().then((keyPair: any) => {
-    //   const publicKey = keyPair.publicKey;
-    //   const privateKey = keyPair.privateKey;
-    //   return {
-    //     publicKey,
-    //     privateKey,
-    //   };
-    // }, 2048);
   }
 
   /**
