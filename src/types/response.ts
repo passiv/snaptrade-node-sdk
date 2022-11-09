@@ -195,7 +195,12 @@ export interface TransactionHistoryResponseType extends ResponseType {
       symbol: string;
       raw_symbol: string;
       currency: CurrencyType;
-      exchange: string | null;
+      exchange: {
+        code: string;
+        mic_code: string;
+        name: string;
+        suffix: string | null
+      } | null;
     };
     option_symbol: string | null;
     account: {
