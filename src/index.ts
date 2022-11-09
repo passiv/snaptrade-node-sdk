@@ -905,7 +905,7 @@ export class SnapTradeFetch {
     { userId, userSecret }: DefaultQueryParams,
     extraParams?: { startDate?: string; endDate?: string; accounts?: string },
     options?: RequestOptionsType
-  ): Promise<TransactionHistoryResponseType[]> {
+  ): Promise<TransactionHistoryResponseType> {
     const response = await request({
       endpoint: '/api/v1/activities',
       method: 'get',
@@ -918,7 +918,7 @@ export class SnapTradeFetch {
       },
       extraParams,
     });
-    return response as Promise<TransactionHistoryResponseType[]>;
+    return response as Promise<TransactionHistoryResponseType>;
   }
 
   /**

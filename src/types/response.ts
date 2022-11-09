@@ -188,20 +188,23 @@ export interface BrokerageAuthorizationTypeObjectResponseType
 }
 
 export interface TransactionHistoryResponseType extends ResponseType {
-  data: {
-    account: AccountType;
-    amount: number;
-    currency: CurrencyType;
-    description: string;
-    fee: number;
-    institution: string;
-    price: number;
-    settlement_date: string;
-    symbol: SymbolType;
-    trade_date: string;
-    type: string;
-    units: number;
-  };
+  data: TransactionHistoryType[];
+}
+
+export interface TransactionHistoryType extends ResponseType {
+  id: string;
+  account: AccountType;
+  amount: number;
+  currency: CurrencyType;
+  description: string;
+  fee: number;
+  institution: string;
+  price: number;
+  settlement_date: string;
+  symbol: SymbolType;
+  trade_date: string;
+  type: string;
+  units: number;
 }
 
 export interface PerformanceInformationResponseType extends ResponseType {
