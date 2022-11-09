@@ -6,20 +6,80 @@ export interface CurrencyType {
   code: string;
   name: string;
 }
+
+export interface BrokerageAuthorizationType {
+  id: string;
+  created_date: string;
+  updated_date: string;
+  name: string;
+  type: string;
+  disabled: boolean;
+  disabled_date: string | null;
+  meta: { identifier: string };
+  brokerage: {
+    id: string;
+    name: string;
+    display_name: string;
+    description: string;
+    aws_s3_logo_url: string;
+    aws_s3_square_logo_url: string;
+    slug: string;
+    url: string;
+    enabled: boolean;
+    maintenance_mode: boolean;
+    allows_fractional_units: boolean;
+    allows_trading: boolean;
+    has_reporting: boolean;
+    is_real_time_connection: boolean;
+    allows_trading_through_snaptrade_api: boolean;
+    is_scraping_integration: boolean;
+    transaction_available_in_realtime: boolean;
+    has_timestamped_transactions: boolean;
+    are_fees_shown_in_transactions: boolean;
+    open_url: string;
+    credentials_stored_in_vault: boolean;
+    has_option_position_support: boolean;
+    has_option_trading_support: boolean;
+    allows_cryptocurrency_symbols: boolean;
+    allows_cryptocurrency_and_regular_securities: boolean;
+    handles_stock_splits: boolean;
+    default_currency: string;
+    brokerage_type: string;
+    exchanges: string[];
+  };
+}
+
+// UserHoldingsResponseType
 export interface AccountType {
+  brokerage_authorization: BrokerageAuthorizationType;
+  id: string;
+  number: string;
+  name: string;
+}
+
+export interface _AccountType {
   id: string;
   brokerage_authorization: string;
   portfolio_group: string;
   name: string;
   number: string;
   institution_name: string;
-  cash_restrictions: CashRestrictionType[];
+  meta: {
+    type: string;
+    status: string;
+    institution_name: string;
+    is_billing: boolean;
+    is_primary: boolean;
+    client_account_type: string;
+  };
+  cash_restrictions: [];
   created_date: string;
 }
 
 export interface BalanceType {
-  currency: CurrencyType;
   cash: number;
+  currency: CurrencyType;
+  buying_power: string;
 }
 
 export interface SymbolType {
@@ -34,14 +94,57 @@ export interface SymbolType {
 }
 
 export interface PositionType {
-  symbol: SymbolType;
+  symbol: {
+    symbol: {
+      id: string;
+      symbol: string;
+      description: string;
+      currency: DividendsSymbolCurrency;
+      exchange: DividendsSymbolExchange;
+      currencies: DividendsSymbolCurrency[];
+      type: {
+        id: string;
+        code: string;
+        is_supported: boolean;
+        description: string;
+      };
+      raw_symbol: string;
+    };
+    id: string;
+    description: string;
+    local_id: string;
+    security_type: {};
+    listing_exchange: {};
+    is_quotable: boolean;
+    is_tradable: boolean;
+  };
+  price: number;
+  open_pnl: null | number;
+  fractional_units: number;
+  currency: null | string;
+  units: number;
+  average_purchase_price: number;
 }
 
 export interface UniversalSymbolType {
   id: string;
   symbol: string;
   description: string;
-  currency: CurrencyType;
+  currency: {
+    id: string;
+    code: string;
+    name: string;
+    include_in_rate_data: boolean;
+  };
+  exchange: DividendsSymbolExchange;
+  currencies: [];
+  type: {
+    id: string;
+    code: string;
+    is_supported: boolean;
+    description: string;
+  };
+  raw_symbol: string;
 }
 
 export interface ManualTradeSymbolType {
@@ -64,6 +167,14 @@ export interface TradeType {
   price: number;
 }
 
+export interface TradeImpactType {
+  account: string;
+  currency: string;
+  remaining_cash: number;
+  estimated_commissions: number;
+  forex_fees: number;
+}
+
 export interface CashRestrictionType {
   id: string;
   account: string;
@@ -73,20 +184,36 @@ export interface CashRestrictionType {
 }
 
 export interface BrokerageType {
+  authorization_types: {
+    type: 'read' | 'trade';
+    auth_type: string;
+  }[];
+  maintenance_windows: [];
+  brokerage_type: {
+    id: string;
+    name: string;
+  };
   id: string;
   name: string;
-  display_name: string;
-  url: string;
-  open_url: string;
   description: string;
   slug: string;
+  url: string;
+  maintenance_mode: boolean;
+  allows_fractional_units: boolean | null;
+  allows_trading: boolean;
+  has_reporting: boolean;
+  is_real_time_connection: boolean;
   aws_s3_logo_url: string;
   aws_s3_square_logo_url: string;
-  maintenance_mode: boolean;
-  is_real_time_connection: boolean;
-  authorized_types: {
-    type: string;
-  }[];
+  open_url: string;
+  display_name: string;
+  enabled: boolean;
+  has_option_position_support: boolean;
+  has_option_trading_support: boolean;
+  allows_cryptocurrency_symbols: boolean;
+  allows_cryptocurrency_and_regular_securities: boolean;
+  confirm_prompt: string | null;
+  default_connection_type: string;
 }
 
 export interface PortfolioGroupType {
@@ -101,35 +228,24 @@ export interface PortfolioGroupPositionType {
   fractional_units: number;
 }
 
-export interface InvestmentAccountType {
-  id: string;
-  brokerage_authorization: string;
-  portfolio_group: string;
-  name: string;
-  number: string;
-  institution_name: string;
-  created_date: string;
-  cash_restrictions: CashRestrictionType[];
-}
-
 export interface OrderType {
   brokerage_order_id: string;
   status: string;
   symbol: string;
   universal_symbol: UniversalSymbolType;
   action: string;
-  total_quantity: number;
-  open_quantity: number;
-  canceled_quantity: number;
-  filled_quantity: number;
-  execution_price: number;
-  limit_price: number;
-  stop_price: number;
+  total_quantity: string;
+  open_quantity: string;
+  canceled_quantity: string;
+  filled_quantity: string;
+  execution_price: string;
+  limit_price: number | null;
+  stop_price: number | null;
   order_type: string;
   time_in_force: 'FOK' | 'Day';
   time_placed: string;
   time_updated: string;
-  expiry_date: string;
+  expiry_date: string | null;
 }
 
 export interface OptionPosition {

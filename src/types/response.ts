@@ -1,12 +1,12 @@
 import {
   AccountType,
   BalanceType,
+  BrokerageAuthorizationType,
   BrokerageType,
   Contribution,
   CurrencyType,
   Dividends,
   DividendsTimeline,
-  InvestmentAccountType,
   ManualTradeSymbolType,
   OptionPosition,
   OrderType,
@@ -14,22 +14,14 @@ import {
   PortfolioGroupType,
   PositionType,
   ReturnRateTimeframe,
-  SymbolType,
   Timeframe,
-  TradeType,
+  TradeImpactType,
   UniversalSymbolType,
+  _AccountType,
 } from './general';
 
 export interface ResponseType {
   meta: { status: number; statusText: string };
-}
-
-export interface ApiStatusResponseType extends ResponseType {
-  data: {
-    version: number;
-    timestamp: string;
-    online: boolean;
-  };
 }
 
 export interface RetrieveJWTResponseType extends ResponseType {
@@ -75,57 +67,61 @@ export interface UserHoldingsResponseType extends ResponseType {
       currency: string;
       value: number;
     };
-  };
+  }[];
 }
 
 export interface AccountHoldingsResponseType extends ResponseType {
   data: {
-    account: AccountType;
-    balances: BalanceType[];
+    account: _AccountType;
     positions: PositionType[];
-    option_positions: OptionPosition[];
+    balances: {
+      currency: CurrencyType;
+      cash: number;
+    }[];
     orders: OrderType[];
+    option_positions: OptionPosition[];
     cache_timestamp: string;
     cache_expiry: string;
-    cache_expired: string;
+    cache_expired: boolean;
   };
 }
 
 export interface AccountResponseType extends ResponseType {
-  data: AccountType;
+  data: _AccountType;
 }
 
 export interface AccountsResponseType extends ResponseType {
-  data: AccountType[];
+  data: _AccountType[];
 }
 
 export interface BalanceResponseType extends ResponseType {
-  data: BalanceType[];
-}
-
-export interface AccountPositionsResponseType extends ResponseType {
   data: {
-    symbol: {
-      symbol: SymbolType;
-    };
-    price: number;
-    open_pnl: number | null;
-    fractional_units: number | null;
-    units: number;
-    average_purchase_price: number;
+    cash: number;
+    currency: CurrencyType;
   }[];
 }
 
+export interface AccountPositionsResponseType extends ResponseType {
+  data: PositionType[];
+}
+
 export interface OrderResponseType extends ResponseType {
+  data: OrderType[];
+}
+
+export interface PlaceOrderResponseType extends ResponseType {
+  data: OrderType;
+}
+
+export interface CancelOrderResponseType extends ResponseType {
   data: OrderType;
 }
 
 export interface OrderImpactResponseType extends ResponseType {
   data: {
-    trade: TradeType;
-    trade_impacts: {
+    trade: {
       id: string;
-      account: AccountType;
+      account: string;
       order_type: string;
       time_in_force: 'FOK' | 'Day';
       symbol: ManualTradeSymbolType;
@@ -133,22 +129,22 @@ export interface OrderImpactResponseType extends ResponseType {
       units: number;
       price: number;
     };
+    trade_impacts: TradeImpactType[];
     combined_remaining_balance: {
-      account: AccountType;
+      account: {
+        id: string;
+        number: string;
+        name: string;
+      };
       currency: CurrencyType;
       cash: number;
+      buying_power: number | null;
     };
   };
 }
 
 export interface MultipleTradesOrderImpactResponseType extends ResponseType {
-  data: {
-    account: InvestmentAccountType;
-    currency: CurrencyType;
-    remaining_cash: number;
-    estimated_commissions: number;
-    forex_fees: number;
-  };
+  data: TradeImpactType[];
 }
 
 export interface SecurityTypeResponseType extends ResponseType {
@@ -157,20 +153,23 @@ export interface SecurityTypeResponseType extends ResponseType {
     code: string;
     description: string;
     is_supported: boolean;
-  };
+  }[];
 }
 
 export interface BrokerageResponseType extends ResponseType {
   data: BrokerageType[];
 }
 
+export interface BrokerageAuthsResponseType extends ResponseType {
+  data: BrokerageAuthorizationType[];
+}
+
 export interface BrokerageAuthResponseType extends ResponseType {
-  data: {
-    id: string;
-    created: number;
-    brokerage: BrokerageType;
-    type: string;
-  };
+  data: BrokerageAuthorizationType;
+}
+
+export interface DeleteAuthorizationResponseType extends ResponseType {
+  data: '';
 }
 
 export interface BrokerageAuthorizationTypeObjectResponseType
@@ -189,19 +188,33 @@ export interface BrokerageAuthorizationTypeObjectResponseType
 
 export interface TransactionHistoryResponseType extends ResponseType {
   data: {
-    account: AccountType;
-    amount: number;
+    id: string;
+    symbol: {
+      description: string;
+      id: string;
+      symbol: string;
+      raw_symbol: string;
+      currency: CurrencyType;
+      exchange: string | null;
+    };
+    option_symbol: string | null;
+    account: {
+      id: string;
+      number: string;
+      name: string;
+    };
     currency: CurrencyType;
-    description: string;
-    fee: number;
-    institution: string;
-    price: number;
-    settlement_date: string;
-    symbol: SymbolType;
-    trade_date: string;
     type: string;
+    description: string;
+    amount: number;
+    price: number;
     units: number;
-  };
+    fee: number;
+    settlement_date: string;
+    trade_date: string;
+    institution: string;
+    option_type: string;
+  }[];
 }
 
 export interface PerformanceInformationResponseType extends ResponseType {
@@ -226,7 +239,7 @@ export interface PerformanceInformationResponseType extends ResponseType {
     rateOfReturn: number;
     returnRateTimeframe: ReturnRateTimeframe[];
     detailedMode: boolean;
-  };
+  }[];
 }
 
 export interface SymbolsQuoteResponseType extends ResponseType {
@@ -237,7 +250,7 @@ export interface SymbolsQuoteResponseType extends ResponseType {
     last_trade_price: number;
     bid_size: number;
     ask_size: number;
-  };
+  }[];
 }
 
 export interface StockExchangeResponseType extends ResponseType {
@@ -250,7 +263,7 @@ export interface StockExchangeResponseType extends ResponseType {
     start_time: string;
     close_time: string;
     suffix: string;
-  };
+  }[];
 }
 
 export interface PartnerDataResponseType extends ResponseType {
@@ -279,11 +292,11 @@ export interface ExchangeRateResponseType extends ResponseType {
     src: CurrencyType;
     dst: CurrencyType;
     exchange_rate: number;
-  };
+  }[];
 }
 
 export interface UniversalSymbolResponseType extends ResponseType {
-  data: UniversalSymbolType;
+  data: UniversalSymbolType[];
 }
 
 export interface PortfolioGroupResponseType extends ResponseType {

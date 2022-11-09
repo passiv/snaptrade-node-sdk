@@ -33,6 +33,10 @@ import {
   AccountHoldingsResponseType,
   PerformanceInformationResponseType,
   PartnerDataResponseType,
+  CancelOrderResponseType,
+  PlaceOrderResponseType,
+  DeleteAuthorizationResponseType,
+  BrokerageAuthsResponseType,
 } from './types/response';
 
 import { privateDecrypt, constants, createDecipheriv } from 'crypto';
@@ -247,12 +251,12 @@ export class SnapTradeFetch {
    * List all accounts for the user, plus balances and positions for each account.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {RequestOptionsType} [options]
-   * @returns Promise<UserHoldingsResponseType[]>
+   * @returns Promise<UserHoldingsResponseType>
    */
   async fetchUserHoldings(
     { userId, userSecret }: DefaultQueryParams,
     options?: RequestOptionsType
-  ): Promise<UserHoldingsResponseType[]> {
+  ): Promise<UserHoldingsResponseType> {
     const response = await request({
       endpoint: '/api/v1/holdings',
       method: 'get',
@@ -264,7 +268,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<UserHoldingsResponseType[]>;
+    return response as Promise<UserHoldingsResponseType>;
   }
 
   /**
@@ -297,7 +301,7 @@ export class SnapTradeFetch {
    * List all investment accounts for the user.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {RequestOptionsType} [options]
-   * @returns Promise<AccountResponseType[]>
+   * @returns Promise<AccountsResponseType>
    */
   async fetchUserAccounts(
     { userId, userSecret }: DefaultQueryParams,
@@ -404,14 +408,14 @@ export class SnapTradeFetch {
    * @param {string} accountId
    * @param { status: string; days: number } extraParams
    * @param {RequestOptionsType} [options]
-   * @returns Promise<OrdersResponseType[]>
+   * @returns Promise<OrdersResponseType>
    */
   async fetchOrdersHistory(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
     extraParams?: { status?: string; days?: number },
     options?: RequestOptionsType
-  ): Promise<OrderResponseType[]> {
+  ): Promise<OrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders`,
       method: 'get',
@@ -424,7 +428,7 @@ export class SnapTradeFetch {
       },
       extraParams,
     });
-    return response as Promise<OrderResponseType[]>;
+    return response as Promise<OrderResponseType>;
   }
 
   /**
@@ -433,14 +437,14 @@ export class SnapTradeFetch {
    * @param {string} accountId
    * @param {brokerage_order_id: string} data
    * @param {RequestOptionsType} [options]
-   * @returns Promise<OrderResponseType>
+   * @returns Promise<CancelOrderResponseType>
    */
   async cancelOpenOrder(
     { userId, userSecret }: DefaultQueryParams,
     accountId: string,
     data: { brokerage_order_id: string },
     options?: RequestOptionsType
-  ): Promise<OrderResponseType> {
+  ): Promise<CancelOrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/accounts/${accountId}/orders/cancel`,
       method: 'post',
@@ -453,7 +457,7 @@ export class SnapTradeFetch {
       },
       data,
     });
-    return response as Promise<OrderResponseType>;
+    return response as Promise<CancelOrderResponseType>;
   }
 
   /**
@@ -490,14 +494,14 @@ export class SnapTradeFetch {
    * @param {string} portfolioGroupId
    * @param {string} calculatedTradeId
    * @param {RequestOptionsType} [options]
-   * @returns Promise<>
+   * @returns Promise<MultipleTradesOrderImpactResponseType>
    */
   async multipleTradesOrderImpact(
     { userId, userSecret }: DefaultQueryParams,
     portfolioGroupId: string,
     calculatedTradeId: string,
     options?: RequestOptionsType
-  ): Promise<MultipleTradesOrderImpactResponseType[]> {
+  ): Promise<MultipleTradesOrderImpactResponseType> {
     const response = await request({
       endpoint: `/api/v1/portfolioGroups/${portfolioGroupId}/calculatedtrades/${calculatedTradeId}`,
       method: 'get',
@@ -509,7 +513,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<MultipleTradesOrderImpactResponseType[]>;
+    return response as Promise<MultipleTradesOrderImpactResponseType>;
   }
 
   /**
@@ -544,13 +548,13 @@ export class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} tradeId
    * @param {RequestOptionsType} [options]
-   * @returns Promise<OrderResponseType>
+   * @returns Promise<PlaceOrderResponseType>
    */
   async placeOrder(
     { userId, userSecret }: DefaultQueryParams,
     tradeId: string,
     options?: RequestOptionsType
-  ): Promise<OrderResponseType> {
+  ): Promise<PlaceOrderResponseType> {
     const response = await request({
       endpoint: `/api/v1/trade/${tradeId}`,
       method: 'post',
@@ -562,7 +566,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<OrderResponseType>;
+    return response as Promise<PlaceOrderResponseType>;
   }
 
   /** Connections **/
@@ -571,12 +575,12 @@ export class SnapTradeFetch {
    * List all brokerage authorizations for the user.
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {RequestOptionsType} [options]
-   * @returns Promise<BrokerageAuthResponseType[]>
+   * @returns Promise<BrokerageAuthsResponseType>
    */
   async fetchBrokerageAuthorizations(
     { userId, userSecret }: DefaultQueryParams,
     options?: RequestOptionsType
-  ): Promise<BrokerageAuthResponseType[]> {
+  ): Promise<BrokerageAuthsResponseType> {
     const response = await request({
       endpoint: '/api/v1/authorizations',
       method: 'get',
@@ -588,7 +592,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<BrokerageAuthResponseType[]>;
+    return response as Promise<BrokerageAuthsResponseType>;
   }
 
   /**
@@ -622,13 +626,13 @@ export class SnapTradeFetch {
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {string} authorizationId
    * @param {RequestOptionsType} [options]
-   * @returns Promise<BrokerageAuthResponseType>
+   * @returns Promise<DeleteAuthorizationResponseType>
    */
   async deleteAuthorization(
     { userId, userSecret }: DefaultQueryParams,
     authorizationId: string,
     options?: RequestOptionsType
-  ): Promise<BrokerageAuthResponseType> {
+  ): Promise<DeleteAuthorizationResponseType> {
     const response = await request({
       endpoint: `/api/v1/authorizations/${authorizationId}`,
       method: 'delete',
@@ -640,7 +644,7 @@ export class SnapTradeFetch {
         userId,
       },
     });
-    return response as Promise<BrokerageAuthResponseType>;
+    return response as Promise<DeleteAuthorizationResponseType>;
   }
 
   /** Reference Data **/
@@ -679,9 +683,9 @@ export class SnapTradeFetch {
 
   /**
    * Return the exchange rates of all supported currencies.
-   * @returns Promise<ExchangeRateResponseType[]>
+   * @returns Promise<ExchangeRateResponseType>
    */
-  async fetchExchangeCurrencies(): Promise<ExchangeRateResponseType[]> {
+  async fetchExchangeCurrencies(): Promise<ExchangeRateResponseType> {
     const response = await request({
       endpoint: '/api/v1/currencies/rates',
       method: 'get',
@@ -690,7 +694,7 @@ export class SnapTradeFetch {
         clientId: this.clientId,
       },
     });
-    return response as Promise<ExchangeRateResponseType[]>;
+    return response as Promise<ExchangeRateResponseType>;
   }
 
   /**
@@ -772,9 +776,9 @@ export class SnapTradeFetch {
 
   /**
    * Get a list of all defined security types
-   * @returns Promise<SecurityTypeResponseType[]>
+   * @returns Promise<SecurityTypeResponseType>
    */
-  async fetchListOfSecurityTypes(): Promise<SecurityTypeResponseType[]> {
+  async fetchListOfSecurityTypes(): Promise<SecurityTypeResponseType> {
     const response = await request({
       endpoint: '/api/v1/securityTypes',
       method: 'get',
@@ -783,17 +787,17 @@ export class SnapTradeFetch {
         clientId: this.clientId,
       },
     });
-    return response as Promise<SecurityTypeResponseType[]>;
+    return response as Promise<SecurityTypeResponseType>;
   }
 
   /**
    * Get a list of all defined Brokerage Authorization Type objects
    * @param { brokerage: string[] } extraParams
-   * @returns Promise<BrokerageAuthorizationTypeObjectResponseType[]>
+   * @returns Promise<BrokerageAuthorizationTypeObjectResponseType>
    */
   async fetchListOfBrokerageAuthorizationTypes(extraParams: {
     brokerage: string[];
-  }): Promise<BrokerageAuthorizationTypeObjectResponseType[]> {
+  }): Promise<BrokerageAuthorizationTypeObjectResponseType> {
     const extraParamsToString = {
       brokerage: extraParams.brokerage.toString(),
     };
@@ -806,14 +810,14 @@ export class SnapTradeFetch {
       },
       extraParams: extraParamsToString,
     });
-    return response as Promise<BrokerageAuthorizationTypeObjectResponseType[]>;
+    return response as Promise<BrokerageAuthorizationTypeObjectResponseType>;
   }
 
   /**
    * Get a list of stock exchanges and their suffixes
-   * @returns Promise<StockExchangeResponseType[]>
+   * @returns Promise<StockExchangeResponseType>
    */
-  async fetchListOfStockExchanges(): Promise<StockExchangeResponseType[]> {
+  async fetchListOfStockExchanges(): Promise<StockExchangeResponseType> {
     const response = await request({
       endpoint: '/api/v1/exchanges',
       method: 'get',
@@ -822,7 +826,7 @@ export class SnapTradeFetch {
         clientId: this.clientId,
       },
     });
-    return response as Promise<StockExchangeResponseType[]>;
+    return response as Promise<StockExchangeResponseType>;
   }
 
   /**
@@ -899,13 +903,13 @@ export class SnapTradeFetch {
    * Get transaction history for a user
    * @param {DefaultQueryParams} defaultQueryParams
    * @param { startDate: string; endDate: string, accounts: string } extraParams
-   * @returns Promise<TransactionHistoryResponseType[]>
+   * @returns Promise<TransactionHistoryResponseType>
    */
   async fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
     extraParams?: { startDate?: string; endDate?: string; accounts?: string },
     options?: RequestOptionsType
-  ): Promise<TransactionHistoryResponseType[]> {
+  ): Promise<TransactionHistoryResponseType> {
     const response = await request({
       endpoint: '/api/v1/activities',
       method: 'get',
@@ -918,20 +922,20 @@ export class SnapTradeFetch {
       },
       extraParams,
     });
-    return response as Promise<TransactionHistoryResponseType[]>;
+    return response as Promise<TransactionHistoryResponseType>;
   }
 
   /**
-   * Get performance information for a specific timeframe
+   * Get performance information for a specific time frame
    * @param {DefaultQueryParams} defaultQueryParams
    * @param {PerformanceInformationQueryParams} extraParams
-   * @returns Promise<PerformanceInformationResponseType[]>
+   * @returns Promise<PerformanceInformationResponseType>
    */
   async fetchPerformanceInformation(
     { userId, userSecret }: DefaultQueryParams,
     extraParams: PerformanceInformationQueryParams,
     options?: RequestOptionsType
-  ): Promise<PerformanceInformationResponseType[]> {
+  ): Promise<PerformanceInformationResponseType> {
     const response = await request({
       endpoint: '/api/v1/performance/custom',
       method: 'get',
@@ -944,6 +948,6 @@ export class SnapTradeFetch {
       },
       extraParams,
     });
-    return response as Promise<PerformanceInformationResponseType[]>;
+    return response as Promise<PerformanceInformationResponseType>;
   }
 }

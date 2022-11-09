@@ -7,3 +7,5 @@ dist/
 # Parcel related files
 .cache
 .parcel-cache
+
+.DS_Store
