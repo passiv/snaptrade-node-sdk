@@ -75,6 +75,7 @@ export const request = async (options: {
   if (defaultQueryParams?.userSecret) {
     params = { ...params, userSecret: defaultQueryParams.userSecret };
   }
+  console.log(defaultQueryParams)
   if (defaultQueryParams?.overrideBaseAPI) {
     baseAPI = defaultQueryParams?.overrideBaseAPI;
   }
