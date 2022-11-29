@@ -89,7 +89,7 @@ export const request = async (options: {
     params: params,
     data: data,
   });
-
+  console.log('=======================HELLOO=======================')
   console.log('baseAPI', baseAPI);
 
   const req = signRequest(axiosInstance, endpoint, consumerKey);
