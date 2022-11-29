@@ -49,7 +49,6 @@ export const request = async (options: {
     clientId: string;
     userId?: string | null;
     userSecret?: string | null;
-    overrideBaseAPI?: string | null;
   };
   extraParams?: {} | null;
   data?: {} | null;
@@ -74,10 +73,6 @@ export const request = async (options: {
   }
   if (defaultQueryParams?.userSecret) {
     params = { ...params, userSecret: defaultQueryParams.userSecret };
-  }
-  console.log(defaultQueryParams)
-  if (defaultQueryParams?.overrideBaseAPI) {
-    baseAPI = defaultQueryParams?.overrideBaseAPI;
   }
   if (extraParams) {
     params = { ...params, ...extraParams };
