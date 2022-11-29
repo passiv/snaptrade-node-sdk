@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as crypto from 'crypto';
 
-const baseAPI = 'https://api.passiv.com';
+let baseAPI = 'https://api.passiv.com';
 
 const JSONstringifyOrder = (obj: any) => {
   var allKeys: any = [];
@@ -49,6 +49,7 @@ export const request = async (options: {
     clientId: string;
     userId?: string | null;
     userSecret?: string | null;
+    overrideBaseAPI?: string | null
   };
   extraParams?: {} | null;
   data?: {} | null;
@@ -73,6 +74,9 @@ export const request = async (options: {
   }
   if (defaultQueryParams?.userSecret) {
     params = { ...params, userSecret: defaultQueryParams.userSecret };
+  }
+  if (defaultQueryParams?.overrideBaseAPI) {
+    baseAPI = defaultQueryParams?.overrideBaseAPI
   }
   if (extraParams) {
     params = { ...params, ...extraParams };
