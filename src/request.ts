@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as crypto from 'crypto';
 
-let baseAPI = 'https://api.passiv.com';
+let baseAPI = 'https://api.staging.passiv.com';
 
 const JSONstringifyOrder = (obj: any) => {
   var allKeys: any = [];
@@ -103,6 +103,7 @@ export const request = async (options: {
         };
         break;
       case 'post':
+        console.log('endpoint --->', endpoint)
         const postReq = await req.post(endpoint, data);
         response = {
           data: postReq.data,
@@ -126,6 +127,7 @@ export const request = async (options: {
         break;
     }
   } catch (err: any) {
+    console.log('err --->', err)
     response = err.response.data;
   }
 
