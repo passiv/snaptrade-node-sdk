@@ -49,7 +49,7 @@ export const request = async (options: {
     clientId: string;
     userId?: string | null;
     userSecret?: string | null;
-    overrideBaseAPI?: string | null
+    overrideBaseAPI?: string | null;
   };
   extraParams?: {} | null;
   data?: {} | null;
@@ -76,7 +76,7 @@ export const request = async (options: {
     params = { ...params, userSecret: defaultQueryParams.userSecret };
   }
   if (defaultQueryParams?.overrideBaseAPI) {
-    baseAPI = defaultQueryParams?.overrideBaseAPI
+    baseAPI = defaultQueryParams?.overrideBaseAPI;
   }
   if (extraParams) {
     params = { ...params, ...extraParams };
@@ -88,6 +88,8 @@ export const request = async (options: {
     params: params,
     data: data,
   });
+
+  console.log('baseAPI', baseAPI);
 
   const req = signRequest(axiosInstance, endpoint, consumerKey);
 
