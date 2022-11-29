@@ -50,7 +50,7 @@ import NodeRSA = require('node-rsa');
 export class SnapTradeFetch {
   clientId: string;
   consumerKey: string;
-  path: string;
+
 
   /**
    * Creates an instance of SnapTrade fetch.
