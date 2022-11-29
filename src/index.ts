@@ -164,6 +164,7 @@ export class SnapTradeFetch {
         clientId: this.clientId,
         userSecret,
         userId,
+        
       },
     });
 

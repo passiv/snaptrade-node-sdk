@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as crypto from 'crypto';
 
-let baseAPI = 'https://api.snaptrade.com';
+let baseAPI = 'https://api.staging.snaptrade.com';
 
 const JSONstringifyOrder = (obj: any) => {
   var allKeys: any = [];
