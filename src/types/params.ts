@@ -5,10 +5,11 @@ export interface DefaultQueryParams {
 
 export interface OrderImpactBodyParams {
   account_id: string;
-  action: "BUY" | "SELL";
-  order_type: "Limit" | "Market";
+  action: 'BUY' | 'SELL';
+  order_type: 'Limit' | 'Market';
   price: number;
-  time_in_force: "Day";
+  stop: number;
+  time_in_force: 'Day';
   units: number;
   universal_symbol_id: string;
 }
@@ -17,6 +18,6 @@ export interface PerformanceInformationQueryParams {
   startDate: string;
   endDate: string;
   accounts?: string;
-  frequency?: "daily" | "weekly" | "monthly" | "quarterly" | "yearly";
+  frequency?: 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
   detailed?: boolean;
 }

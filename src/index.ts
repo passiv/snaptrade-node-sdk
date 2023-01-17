@@ -569,6 +569,33 @@ export class SnapTradeFetch {
     return response as Promise<PlaceOrderResponseType>;
   }
 
+  /**
+   * Place a trade with NO validation.
+   * @param {DefaultQueryParams} defaultQueryParams
+   * @param {OrderImpactBodyParams} data
+   * @param {RequestOptionsType} [options]
+   * @returns Promise<PlaceOrderResponseType>
+   */
+  async placeTradeWithNoValidation(
+    { userId, userSecret }: DefaultQueryParams,
+    data: OrderImpactBodyParams,
+    options?: RequestOptionsType
+  ): Promise<PlaceOrderResponseType> {
+    const response = await request({
+      endpoint: '/api/v1/trade/place',
+      method: 'post',
+      timeout: options?.timeout,
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+        userSecret,
+        userId,
+      },
+      data,
+    });
+    return response as Promise<PlaceOrderResponseType>;
+  }
+
   /** Connections **/
 
   /**

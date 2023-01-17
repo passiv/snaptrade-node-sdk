@@ -171,3 +171,41 @@ const placeOrder = async () => {
   return placedOrder;
 };
 ```
+
+### _place trade with NO validation_
+
+Place trade with NO validation
+
+##### Signature:
+
+```typescript
+placeTradeWithNoValidation(
+    { userId, userSecret }: DefaultQueryParams,
+    data: OrderImpactBodyParams,
+    options?: RequestOptionsType
+  ): Promise<PlaceOrderResponseType>
+```
+
+##### Example:
+
+```typescript
+const placeTradeNoValidation = async () => {
+  const placeTrade = await snapTrade.placeTradeWithNoValidation(
+    {
+      userId: 'USER_ID',
+      userSecret: 'USER_SECRET',
+    },
+    {
+      account_id: 'ACCOUNT_ID',
+      action: 'BUY',
+      order_type: 'Limit',
+      price: 70,
+      stop: 0,
+      time_in_force: 'Day',
+      units: 1,
+      universal_symbol_id: 'UNIVERSAL_SYMBOL_ID',
+    }
+  );
+  return placeTrade;
+};
+```
