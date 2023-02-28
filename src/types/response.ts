@@ -55,6 +55,10 @@ export interface RedirectURIResponseType extends ResponseType {
   };
 }
 
+export interface UsersResponseType extends ResponseType {
+  data: string[];
+}
+
 export interface UserHoldingsResponseType extends ResponseType {
   data: {
     account: AccountType;
@@ -199,7 +203,7 @@ export interface TransactionHistoryResponseType extends ResponseType {
         code: string;
         mic_code: string;
         name: string;
-        suffix: string | null
+        suffix: string | null;
       } | null;
     };
     option_symbol: string | null;

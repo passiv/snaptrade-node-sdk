@@ -37,6 +37,7 @@ import {
   PlaceOrderResponseType,
   DeleteAuthorizationResponseType,
   BrokerageAuthsResponseType,
+  UsersResponseType,
 } from './types/response';
 
 import { privateDecrypt, constants, createDecipheriv } from 'crypto';
@@ -243,6 +244,22 @@ export class SnapTradeFetch {
       data,
     });
     return response as Promise<RedirectURIResponseType>;
+  }
+
+  /**
+   * Get a list of all SnapTrade users that partner has registered on their platform
+   * @returns Promise<UsersResponseType>
+   */
+  async listUsers(): Promise<UsersResponseType> {
+    const response = await request({
+      endpoint: '/api/v1/snapTrade/listUsers',
+      method: 'get',
+      consumerKey: this.consumerKey,
+      defaultQueryParams: {
+        clientId: this.clientId,
+      },
+    });
+    return response as Promise<UsersResponseType>;
   }
 
   /** Account Information **/
