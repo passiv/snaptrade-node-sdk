@@ -140,6 +140,25 @@ const deleteUser = async () => {
 };
 ```
 
+### _list users_
+
+Get a list of all SnapTrade users partner has registered on their platform.
+
+##### Signature:
+
+```typescript
+async listUsers(): Promise<UsersResponseType>
+```
+
+##### Example:
+
+```typescript
+const listUsersRegistered = async () => {
+  const users = await snapTrade.listUsers();
+  return users;
+};
+```
+
 ---
 
 ## 📑 Full Documentation
