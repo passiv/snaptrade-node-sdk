@@ -9,6 +9,9 @@ List all accounts for the user, plus balances and positions for each account.
 ```typescript
 fetchUserHoldings(
     { userId, userSecret }: DefaultQueryParams,
+     extraParams?: {
+      authorizationIds: string[];
+    },
     options?: RequestOptionsType
   ): Promise<UserHoldingsResponseType[]>
 ```
@@ -21,6 +24,12 @@ const userHoldings = async () => {
     {
       userId: 'USER_ID',
       userSecret: 'USER_SECRET',
+    },
+    {
+      authorizationIds: [
+        'adc69153-3eCe-4s7e-9d8e-9efdb412d030',
+        '0ac1xdb1-64xf-4e9e-afdd-a2c02222x2af',
+      ],
     },
     { timeout: 65000 } // default timeout is 60000
   );

@@ -267,13 +267,21 @@ export class SnapTradeFetch {
   /**
    * List all accounts for the user, plus balances and positions for each account.
    * @param {DefaultQueryParams} defaultQueryParams
+   * @param { authorizationIds: string[] } extraParams
    * @param {RequestOptionsType} [options]
    * @returns Promise<UserHoldingsResponseType>
    */
   async fetchUserHoldings(
     { userId, userSecret }: DefaultQueryParams,
+    extraParams?: {
+      authorizationIds: string[];
+    },
     options?: RequestOptionsType
   ): Promise<UserHoldingsResponseType> {
+    const extraParamsToString = {
+      brokerage_authorizations: extraParams?.authorizationIds.toString(),
+    };
+
     const response = await request({
       endpoint: '/api/v1/holdings',
       method: 'get',
@@ -284,6 +292,9 @@ export class SnapTradeFetch {
         userSecret,
         userId,
       },
+      extraParams: extraParamsToString.brokerage_authorizations
+        ? extraParamsToString
+        : null,
     });
     return response as Promise<UserHoldingsResponseType>;
   }
