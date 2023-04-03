@@ -962,9 +962,19 @@ export class SnapTradeFetch {
    */
   async fetchTransactionHistory(
     { userId, userSecret }: DefaultQueryParams,
-    extraParams?: { startDate?: string; endDate?: string; accounts?: string },
+    extraParams?: {
+      startDate?: string;
+      endDate?: string;
+      accounts?: string;
+      brokerageAuthorizations?: string[];
+    },
     options?: RequestOptionsType
   ): Promise<TransactionHistoryResponseType> {
+    const modifiedExtraParams = {
+      ...extraParams,
+      brokerageAuthorizations: extraParams?.brokerageAuthorizations?.toString(),
+    };
+
     const response = await request({
       endpoint: '/api/v1/activities',
       method: 'get',
@@ -975,7 +985,7 @@ export class SnapTradeFetch {
         userSecret,
         userId,
       },
-      extraParams,
+      extraParams: modifiedExtraParams,
     });
     return response as Promise<TransactionHistoryResponseType>;
   }
