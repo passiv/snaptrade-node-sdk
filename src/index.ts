@@ -60,6 +60,13 @@ export class SnapTradeFetch {
   constructor(clientId: string, consumerKey: string) {
     this.clientId = clientId;
     this.consumerKey = consumerKey;
+    this.checkDeprecated();
+  }
+
+  checkDeprecated() {
+    console.warn(
+      'This SDK has been deprecated and is no longer receiving support. Please use our maintained SDK here: https://www.npmjs.com/package/snaptrade-typescript-sdk'
+    );
   }
 
   /** Helper Functions */
