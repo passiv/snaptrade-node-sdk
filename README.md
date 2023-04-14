@@ -5,7 +5,7 @@
 </div>
 <h1 align="center">snaptrade-node</h1>
 <br>
-<h2 align="center">The official Node.js library for the <a href="https://docs.snaptrade.com/reference/getting-started">SnapTrade API</a>.</h2>
+<h2 align="center">This SDK has been deprecated and is no longer receiving support. Please use our maintained SDK here: <a href="https://www.npmjs.com/package/snaptrade-typescript-sdk">SnapTrade API</a>.</h2>
 <br>
 <p>Contact us to schedule a demo and get a consumer key: <a href="mailto:api@snaptrade.com">api@snaptrade.com</a></p>
 <br>
