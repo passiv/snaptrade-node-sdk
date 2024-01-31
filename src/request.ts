@@ -83,6 +83,9 @@ export const request = async (options: {
     timeout,
     params: params,
     data: data,
+    headers: {
+      'User-Agent': 'SnapTrade/1.2.9-deprecated/node',
+    },
   });
 
   const req = signRequest(axiosInstance, endpoint, consumerKey);

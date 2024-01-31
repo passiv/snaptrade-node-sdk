@@ -237,6 +237,7 @@ export class SnapTradeFetch {
       customRedirect?: string;
       reconnect?: string;
       connectionType?: string;
+      connectionPortalVersion?: string;
     }
   ): Promise<RedirectURIResponseType> {
     const response = await request({
